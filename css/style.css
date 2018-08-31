@@ -26,6 +26,60 @@ header {
     /* padding: 10px; */
     color: white;
     display: flex;
+    justify-content: space-between;
+}
+
+.nav {
+    position: relative;
+}
+
+.nav-button {
+    padding: 10px 20px;
+
+    
+}
+/* .nav-button:hover{
+    padding: 10px 20px;
+    
+    
+} */
+
+.nav-list {
+    background-color:#ff6666; 
+    position: absolute;   
+    display: none;
+     
+}
+
+.nav:hover .nav-list{
+    display: block
+    
+}
+
+.nav-list ul li {
+    list-style-type: none;
+    
+    
+}
+
+.nav-list ul li a:link, .nav-list ul li a:visited{
+    text-decoration: none;
+    display: block;
+    color: white;
+    padding: 20px 10px;
+}
+
+.nav-list ul li a:hover, .nav-list ul li a:active{
+    text-decoration: none;
+    display: block;
+    background-color:#cc0000;
+    padding: 20px 10px;
+}
+.bar {
+    width: 35px;
+    height:5px;
+    background-color:white;
+    margin:6px 0;
 }
 
 /* header h2 {
@@ -171,7 +225,7 @@ input:focus {
     border: 1px solid #ccc;
     width:40%;
     position: relative;
-    overflow:hidden;
+    z-index: -1;
     min-height: 100px;
 }
 
