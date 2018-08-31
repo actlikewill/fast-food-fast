@@ -33,42 +33,22 @@
 
 
         <div class="heading">
-            <h4>Welcome User</h4>
+            <h4>Welcome Admin</h4>
         </div>
         <div class="container">
-            <div class="table">
-                
-                <h3>User History</h3>
-                <p><small>This is your history of orders.</small></p>
-                    <table>
-                        <tr>
-                            <th class="narrow">Date</th>
-                            <th>You Bought:</th>
-                            <th class="narrow">You Paid (Ksh):</th>                            
-                        </tr>
-                        <tr>
-                            <td>01-Jan-18</td>
-                            <td> 3 Burgers, 1 Coffee</td>
-                            <td>500</td> 
-                        </tr>
-                        <tr>
-                            <td>03-Jan-18</td>
-                            <td>4 Chickens, 1 French Fries</td>
-                            <td>700</td> 
-                        </tr>
-                        <tr>
-                            <td>04-Jan-18</td>
-                            <td>4 Hotdogs, 3 Coffees</td>
-                            <td>1250</td> 
-                        </tr>
-                        <tr>
-                            <td>05-Jan-19</td>
-                            <td>1 Coffee, 1 Burger</td>
-                            <td>400</td> 
-                        </tr>
-                        
-                    </table>
-            </div>
+                <form id="loginForm" class="add-form" action="orders.html">  
+                                
+                    <label class="form-label" for=""><strong>Add Item Name:</strong></label><br>
+                    <small>Keep it short and descriptive:</small>
+                    <input class="form-input" type="text"><br>
+                    <label class="form-label" for=""><strong>Add Item Price:</strong></label><br>
+                    <small>The price is in Ksh</small>
+                    <input class="form-input" type="text"><br>
+                    <label class="form-label" for=""><strong>Add Item Image:</strong></label><br>
+                    <small>Add an image to be displayed in the menu</small>
+                    <input class="form-input" type="file"><br>
+                    <input class="form-submit" type="submit">
+                </form>
         </div>
     </div>
 <script src="js/script.js"></script>
