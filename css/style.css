@@ -298,19 +298,60 @@ input:focus {
 
 .order-button {     
      padding: 5px;
-     margin-right: 20px;
-     border-radius: 5px; 
+     margin-right: 10px;
+     border-radius: 5px;
+     width: 40%;
+      
  }
 
  .complete {
      border: 1px solid green;
      background-color: rgb(174, 248, 176);
  }
+
  .complete:hover {
     border: 1px solid green;
     background-color:green;    
     color:white; 
 }
+
+.accept {
+    border: 1px solid rgb(182, 83, 3);
+    background-color: rgb(255, 208, 106);
+}
+
+.accept:hover {
+    border: 1px solid rgb(255, 203, 61);
+    background-color: rgb(255, 203, 61);
+    color:white;
+}
+
+ .decline {
+    border: 1px solid rgb(128, 0, 11);
+    background-color: rgb(255, 92, 100);
+ }
+
+ .decline:hover {
+    border: 1px solid red;
+    background-color: red;
+    color: white;
+ }
+
+ .undo {
+    border: 1px solid rgb(131, 131, 131);
+    background-color: rgb(233, 233, 233);
+ }
+
+ .undo:hover{
+    border: 1px solid rgb(83, 83, 83);
+    background-color: rgb(83, 83, 83);
+    color: white;
+ }
+
+
+
+
+
  
 
 
