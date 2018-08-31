@@ -241,7 +241,7 @@ input:focus {
 
  }
 
- .order-button button{
+ .place-order-button button{
     width: 100%;    
     position: absolute;
     bottom: 0;
@@ -255,7 +255,7 @@ input:focus {
     color: gray; 
  }
 
- .order-button button:hover {
+ .place-order-button button:hover {
      background-color: #FFF18D;
      border: 1px solid #FFF18D;
      color: gray;
