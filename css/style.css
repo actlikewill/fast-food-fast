@@ -32,6 +32,8 @@ header {
     padding-top: 7px;
 } */
 
+
+
 .logo {
     width: 200px;    
 }
@@ -42,6 +44,10 @@ header {
 }
 
 /* Form styles */
+
+#loginForm {
+    display:block
+}
 
 form {
     display:block;    
