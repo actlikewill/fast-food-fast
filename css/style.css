@@ -215,10 +215,6 @@ input:focus {
     padding: 20px;
 }
 
-.login {
-    
-    padding: 20px;
-}
 
 .order {    
     margin-left: 20px;
@@ -230,8 +226,7 @@ input:focus {
 }
 
 .order-heading {
-    background-color: #cc0000;
-    
+    background-color: #cc0000;    
     display: block;
     padding: 10px;
 }
@@ -247,9 +242,7 @@ input:focus {
  }
 
  .order-button button{
-    width: 100%;
-    
-    
+    width: 100%;    
     position: absolute;
     bottom: 0;
     background-color: #FCEA4C;  
@@ -267,29 +260,26 @@ input:focus {
      border: 1px solid #FFF18D;
      color: gray;
  }
- .spacer {
-    
+ .spacer {    
      height: 50px;
  }
 
- .admin-main {
+ .container {
      padding:20px;
  }
 
- .order-table table{
+ .table table{
      border: 1px solid #ccc;
      border-collapse: collapse;
-     width: 100%;
-     
-     
+     width: 100%;     
  }
 
- .order-table th, .order-table td {
+ .table th, .table td {
     border: 1px solid #ccc;
     padding: 10px;
  }
 
- .order-table tr:nth-child(even) {
+ .table tr:nth-child(even) {
      background-color: #ddd;
  }
 
@@ -297,9 +287,13 @@ input:focus {
      width:10%;
  }
 
- .order-table h3 {
-     padding: 10px;
-     
+ .table h3{
+     padding: 5px;     
+ }
+
+ .table p {
+     padding-left:5px;
+     padding-bottom: 10px;
  }
 
 .order-button {     
