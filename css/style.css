@@ -301,6 +301,22 @@ input:focus {
      padding: 10px;
      
  }
+
+.order-button {     
+     padding: 5px;
+     margin-right: 20px;
+     border-radius: 5px; 
+ }
+
+ .complete {
+     border: 1px solid green;
+     background-color: rgb(174, 248, 176);
+ }
+ .complete:hover {
+    border: 1px solid green;
+    background-color:green;    
+    color:white; 
+}
  
 
 
