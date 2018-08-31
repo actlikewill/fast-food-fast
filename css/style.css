@@ -272,6 +272,37 @@ input:focus {
      height: 50px;
  }
 
+ .admin-main {
+     padding:20px;
+ }
+
+ .order-table table{
+     border: 1px solid #ccc;
+     border-collapse: collapse;
+     width: 100%;
+     
+     
+ }
+
+ .order-table th, .order-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+ }
+
+ .order-table tr:nth-child(even) {
+     background-color: #ddd;
+ }
+
+ .narrow {
+     width:10%;
+ }
+
+ .order-table h3 {
+     padding: 10px;
+     
+ }
+ 
+
 
 
 
