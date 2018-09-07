@@ -36,4 +36,4 @@ def update_order(orderId):
     if len(order) == 0:
         abort(404)
     order[0]['status'] = request.args.get('status')
-    return jsonify({'Updated order': order[0]})
+    return jsonify({'Updated order': order[0]}), 201
