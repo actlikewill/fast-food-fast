@@ -17,4 +17,4 @@ def place_order():
         "quantity": request.args.get('quantity')        
     }
     OrderClass.add_order(order)
-    return jsonify({"order placed": order}), 201
+    return jsonify({"Place Order": order}), 201
