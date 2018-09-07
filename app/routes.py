@@ -15,7 +15,8 @@ def place_order():
     order = {
         "item": request.args.get('item'),
         "quantity": request.args.get('quantity'),
-        "orderId":len(OrderClass.order_list) + 1        
+        "orderId":len(OrderClass.order_list) + 1,
+        "status": "Pending"        
     }
     OrderClass.add_order(order)
     return jsonify({"Place Order": order}), 201
@@ -27,3 +28,12 @@ def get_order(orderId):
     if len(order) == 0:
         abort(404)
     return jsonify({'order': order[0]})
+
+@app.route('/api/v1/orders/<int:orderId>', methods=['PUT'])
+def update_order(orderId):
+    orders = OrderClass.order_list
+    order = [order for order in orders if order['orderId'] == orderId]
+    if len(order) == 0:
+        abort(404)
+    order[0]['status'] = request.args.get('status')
+    return jsonify({'Updated order': order[0]}), 201
