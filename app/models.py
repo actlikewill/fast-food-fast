@@ -18,6 +18,7 @@ class Orders:
         new_order = {
             "item": new_order_obj.item_name,
             "quantity": new_order_obj.item_quantity,
-            "orderId": order_number
+            "orderId": order_number,
+            "status": "Pending"
         }        
         self.order_list.append(new_order)
