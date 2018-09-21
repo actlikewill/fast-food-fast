@@ -12,14 +12,15 @@ ORDERS = Orders()
 
 class GetOrders(Resource):
     """This responds to queries to the whole order class"""
-    def get(self):
+    @classmethod
+    def get(cls):
         """This gets the list of all orders if any"""
         orders = ORDERS.order_list
         if not orders:
             return {"sorry": "no orders yet"}
         return {'Orders': ORDERS.order_list}
-
-    def post(self):
+    @classmethod
+    def post(cls):
         """This receives arguments and creates an order"""
         if not request.args:
             return jsonify({"sorry":"no arguments passed"})
@@ -38,7 +39,8 @@ class GetOrders(Resource):
 
 class SingleOrder(Resource):
     """This responds to single order requests using the unique order id"""
-    def get(self, order_id):
+    @classmethod
+    def get(cls, order_id):
         """Returns a single order"""
         orders = ORDERS.order_list
         order = [order for order in orders if order['order_id'] == order_id]
@@ -46,8 +48,8 @@ class SingleOrder(Resource):
             abort(404, message='error')
         return {'Your order': order[0]}
 
-
-    def put(self, order_id):
+    @classmethod
+    def put(cls, order_id):
         """Updates a single order"""
         orders = ORDERS.order_list
         if not orders:

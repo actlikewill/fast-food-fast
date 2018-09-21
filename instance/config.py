@@ -3,7 +3,7 @@ Contains configurations for the applications
 """
 
 class Config(object):
-    """The base configurations class"""    
+    """The base configurations class"""
     @staticmethod
     def init_app(app):
         """This initializes the app instance"""
