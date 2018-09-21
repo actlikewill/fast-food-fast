@@ -4,7 +4,7 @@ from app import create_app
 
 @pytest.fixture
 def client(request):
-    test_client = create_app('default').test_client()    
+    test_client = create_app('default').test_client()
     return test_client
 
 def test_get_orders(client):
@@ -18,7 +18,7 @@ def test_orders_post(client):
 
 def test_update_orders(client):
     response = client.put('/api/v1/orders/1?status=accepted')
-    assert b'accepted' in response.data 
+    assert b'accepted' in response.data
     assert response.status_code == 201
 
 def test_error_404(client):
@@ -37,3 +37,4 @@ def test_no_quantity(client):
 def test_no_item(client):
     response = client.post('/api/v1/orders?quantity=1')
     assert b'sorry' in response.data
+    
