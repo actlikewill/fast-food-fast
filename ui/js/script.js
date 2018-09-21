@@ -18,7 +18,7 @@ function openTab(evt, tabName) {
 function addItem(clicked_id) {
     var ul = document.getElementById("order-list");
     var item = event.target.id;
-    var li = document.createElement('li');
+    var li = document.createElement("i");
     var order_item = document.getElementById(clicked_id).childNodes[3].innerText;
     var price = document.getElementById(clicked_id).childNodes[5].innerText;
     var listitem = `${order_item} --- ${price}`;
