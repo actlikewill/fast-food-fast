@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <title>Admin | Fast Food Fast</title>
+</head>
+<body>
+    <div class="main">
+        <header>
+            <img class="logo" src="img/fast-logo.svg" alt="">
+            <div class="nav">
+                <div class="nav-button">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <div class="nav-list">                
+                    <ul>
+                        <li><a href="user-login.html">Login</a></li>
+                        <li><a href="orders.html">Place Order</a></li>
+                        <li><a href="admin.html">Admin</a></li>
+                        <li><a href="user-history.html">User History</a></li>
+                        <li><a href="admin-add.html">Admin Add</a></li>
+                    </ul>
+                </div>
+            </div>         
+                        
+        </header>
+
+
+        <div class="heading">
+            <h4>Welcome Admin</h4>
+        </div>
+        <div class="container">
+                <form id="loginForm" class="add-form" action="orders.html">  
+                                
+                    <label class="form-label" for=""><strong>Add Item Name:</strong></label><br>
+                    <small>Keep it short and descriptive:</small>
+                    <input class="form-input" type="text"><br>
+                    <label class="form-label" for=""><strong>Add Item Price:</strong></label><br>
+                    <small>The price is in Ksh</small>
+                    <input class="form-input" type="text"><br>
+                    <label class="form-label" for=""><strong>Add Item Image:</strong></label><br>
+                    <small>Add an image to be displayed in the menu</small>
+                    <input class="form-input" type="file"><br>
+                    <input class="form-submit" type="submit">
+                </form>
+        </div>
+    </div>
+<script src="js/script.js"></script>
+    
+</body>
+</html>
