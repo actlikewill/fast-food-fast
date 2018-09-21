@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <title>Login | Fast Food Fast</title>
+</head>
+<body>
+    <div class="main">
+        <header>
+            <img class="logo" src="img/fast-logo.svg" alt="">
+            <div class="nav">
+                <div class="nav-button">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <div class="nav-list">                
+                    <ul>
+                        <li><a href="user-login.html">Login</a></li>
+                        <li><a href="index.html">Place Order</a></li>
+                        <li><a href="index.html">Admin</a></li>
+                        <li><a href="user-history.html">User History</a></li>
+                        <li><a href="admin-add.html">Admin Add</a></li>
+
+
+                    </ul>
+                </div>
+            </div>         
+                        
+        </header>
+        <div class="heading">
+            <h3>Please Login or Sign Up</h3>
+        </div>
+
+        <div class="container">
+            <!-- Tablinks -->
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'loginForm')">Login</button>
+                <button class="tablinks" onclick="openTab(event, 'signUpForm')">Sign Up</button>
+                
+            </div>
+           <!-- Tab Content  -->
+            <form id="loginForm" class="tabcontent" action="orders.html">
+                                
+                <label class="form-label" for="">Username:</label><br>
+                <input class="form-input" type="text"><br>
+                <label class="form-label" for="">Password:</label><br>
+                <input class="form-input" type="password"><br>
+                <input class="form-submit" type="submit">
+            </form>
+            <form id="signUpForm" class="tabcontent" action="orders.html">
+                <label class="form-label" for="">Username:</label><br>
+                <input class="form-input" type="text"><br>
+                <label class="form-label" for="">Email:</label><br>
+                <input class="form-input" type="text"><br>
+                <label class="form-label" for="">Password:</label><br>
+                <input class="form-input" type="password"><br>
+                <label class="form-label" for="">Repeat Password:</label><br>
+                <input class="form-input" type="password"><br>
+                <input class="form-submit" type="submit">
+            </form>
+        </div>
+    </div>
+<script src="js/script.js"></script>
+</body>
+</html>

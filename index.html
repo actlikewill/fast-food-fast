@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <title>Login | Fast Food Fast</title>
+    <title>Home | Fast Food Fast</title>
 </head>
 <body>
     <div class="main">
@@ -20,51 +20,113 @@
                 </div>
                 <div class="nav-list">                
                     <ul>
-                        <li><a href="index.html">Login</a></li>
-                        <li><a href="orders.html">Place Order</a></li>
+                        <li><a href="user-login.html">Login</a></li>
+                        <li><a href="index.html">Place Order</a></li>
                         <li><a href="admin.html">Admin</a></li>
                         <li><a href="user-history.html">User History</a></li>
                         <li><a href="admin-add.html">Admin Add</a></li>
-
-
                     </ul>
                 </div>
             </div>         
                         
         </header>
-        <div class="heading">
-            <h3>Please Login or Sign Up</h3>
-        </div>
 
-        <div class="container">
-            <!-- Tablinks -->
-            <div class="tab">
-                <button class="tablinks active" onclick="openTab(event, 'loginForm')">Login</button>
-                <button class="tablinks" onclick="openTab(event, 'signUpForm')">Sign Up</button>
+
+        <div class="heading">
+            <h3>Click on an item to add to your order</h3>
+        </div>
+        <div class="row">
+            <div class="menu">
+                <div id="fries" class="menu-item" onclick="addItem(this.id)">
+                    <div class="menu-img">
+                        <img src="img/fries.svg" alt="">
+                    </div>
+                    <div  class="menu-text">
+                        <h4>French Fries</h4>
+                    </div>
+                    <div  class="menu-price">
+                        <h4>Ksh 250</h4>
+                    </div>
+                </div>
+                <div id="pizza" class="menu-item" id="chicken" onclick="addItem(this.id)">
+                    <div class="menu-img">
+                        <img src="img/pizza.svg" alt="">
+                    </div>
+                    <div class="menu-text">
+                        <h4>Pizza</h4>
+                    </div>
+                    <div class="menu-price">
+                        <h4>Ksh 150</h4>
+                    </div>
+                </div>
+                <div id="hotdog" class="menu-item" onclick="addItem(this.id)">
+                    <div class="menu-img">
+                        <img id="hotdog" src="img/hotdog.svg" alt="">
+                    </div>
+                    <div class="menu-text">
+                        <h4>Hotdog</h4>
+                    </div>
+                    <div class="menu-price">
+                        <h4>Ksh 180</h4>
+                    </div>
+                </div>
+                <div id="coffee" class="menu-item" onclick="addItem(this.id)">
+                    <div class="menu-img">
+                        <img src="img/soda.svg" alt="">
+                    </div>
+                    <div class="menu-text">
+                        <h4>Soda</h4>
+                    </div>
+                    <div class="menu-price">
+                        <h4>Ksh 100</h4>
+                    </div>
+                </div>
+                <div id="burger" class="menu-item" onclick="addItem(this.id)">
+                    <div class="menu-img">
+                        <img src="img/burger.svg" alt="">
+                    </div>
+                    <div class="menu-text">
+                        <h4>Burger</h4>
+                    </div>
+                    <div class="menu-price">
+                        <h4>Ksh 300</h4>
+                    </div>
+                </div>
+                <div id="ice-cream" class="menu-item" onclick="addItem(this.id)">
+                    <div class="menu-img">
+                        <img src="img/ice-cream.svg" alt="">
+                    </div>
+                    <div class="menu-text">
+                        <h4>Ice Cream</h4>
+                    </div>
+                    <div class="menu-price">
+                        <h4>Ksh 300</h4>
+                    </div>
+                </div>
                 
             </div>
-           <!-- Tab Content  -->
-            <form id="loginForm" class="tabcontent" action="orders.html">
-                                
-                <label class="form-label" for="">Username:</label><br>
-                <input class="form-input" type="text"><br>
-                <label class="form-label" for="">Password:</label><br>
-                <input class="form-input" type="password"><br>
-                <input class="form-submit" type="submit">
-            </form>
-            <form id="signUpForm" class="tabcontent" action="orders.html">
-                <label class="form-label" for="">Username:</label><br>
-                <input class="form-input" type="text"><br>
-                <label class="form-label" for="">Email:</label><br>
-                <input class="form-input" type="text"><br>
-                <label class="form-label" for="">Password:</label><br>
-                <input class="form-input" type="password"><br>
-                <label class="form-label" for="">Repeat Password:</label><br>
-                <input class="form-input" type="password"><br>
-                <input class="form-submit" type="submit">
-            </form>
+            <div class="order">
+                <div class="order-heading">
+                    <h4>Your Order</h4>
+                </div>
+                <div id="order-list">
+                    
+                </div>
+                <div class="spacer">
+                    
+                </div>
+
+                <div class="place-order-button">                
+                    <button type="submit" class="button">Place Order</button>
+                </div>
+                
+               
+                
+                
+            </div>
         </div>
     </div>
 <script src="js/script.js"></script>
+    
 </body>
 </html>

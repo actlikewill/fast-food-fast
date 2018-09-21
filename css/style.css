@@ -8,58 +8,39 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
-.main {
-    border:1px solid #ccc;
-    width: 80%;
-    margin:10px auto;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);    
-   
-}
-
 header {
     border-top-right-radius: inherit;
     border-top-left-radius: inherit;
     height: 60px;
-    background-color: #cc0000;
-    /* padding: 10px; */
+    background-color: #cc0000;    
     color: white;
     display: flex;
     justify-content: space-between;
 }
+
+/* Navigation Styles */
 
 .nav {
     position: relative;
 }
 
 .nav-button {
-    padding: 10px 20px;
-
-    
+    padding: 10px 20px; 
 }
-/* .nav-button:hover{
-    padding: 10px 20px;
-    
-    
-} */
 
 .nav-list {
     background-color:#ff6666; 
     position: absolute;   
     display: none;
-     
+    z-index: 999;     
 }
 
 .nav:hover .nav-list{
-    display: block
-    
+    display: block    
 }
 
 .nav-list ul li {
-    list-style-type: none;
-    
-    
+    list-style-type: none;    
 }
 
 .nav-list ul li a:link, .nav-list ul li a:visited{
@@ -75,18 +56,13 @@ header {
     background-color:#cc0000;
     padding: 20px 10px;
 }
+
 .bar {
     width: 35px;
     height:5px;
     background-color:white;
     margin:6px 0;
 }
-
-/* header h2 {
-    padding-top: 7px;
-} */
-
-
 
 .logo {
     width: 200px;    
@@ -131,6 +107,7 @@ input:focus {
     border:2px solid #ff6666
 }
 /* Tab Styles */
+
 .tab {
     overflow:hidden;
     border:1px solid #ccc;
@@ -178,12 +155,10 @@ input:focus {
     flex-grow:1;
 }
 
+/* Menu Styles */
 
-
-.menu {
-    /* border:1px solid #ddd; */
-    width:50%;
-    
+.menu {    
+    width:50%;    
 }
 
 .menu-item {
@@ -214,14 +189,11 @@ input:focus {
     display: flex;
     padding: 20px;
 }
-
-
 .order {    
     margin-left: 20px;
     border: 1px solid #ccc;
     width:40%;
-    position: relative;
-    z-index: -1;
+    position: relative;    
     min-height: 100px;
 }
 
@@ -237,6 +209,7 @@ input:focus {
  .order li {
      list-style-type: none;
      padding: 5px;
+     margin-bottom: 5px;
      display:block;
 
  }
@@ -260,6 +233,15 @@ input:focus {
      border: 1px solid #FFF18D;
      color: gray;
  }
+ 
+ .place-order-button button:active {
+    background-color: rgb(255, 50, 50);
+    border: 1px solid rgb(255, 50, 50);
+    color: white;
+}
+
+
+
  .spacer {    
      height: 50px;
  }
@@ -267,6 +249,8 @@ input:focus {
  .container {
      padding:20px;
  }
+
+ /* Table styles */
 
  .table table{
      border: 1px solid #ccc;
@@ -300,10 +284,8 @@ input:focus {
      padding: 5px;
      margin-right: 10px;
      border-radius: 5px;
-     width: 40%;
-      
+     width: 40%;      
  }
-
  .complete {
      border: 1px solid green;
      background-color: rgb(174, 248, 176);
@@ -351,6 +333,31 @@ input:focus {
  .add-form {    
     padding: 6px 12px;
     border: 1px solid #ccc;  
+    
+}
+
+/* Media queries */
+
+@media screen and (min-width: 814px) {   
+  
+    .main {
+        border:1px solid #ccc;
+        width: 80%;
+        margin:5px auto;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        min-height: 600px;     
+    
+    }
+    
+}
+
+@media screen and (max-width:814px) {   
+  
+    .menu-item {          
+        width: 100%
+    }
     
 }
 
