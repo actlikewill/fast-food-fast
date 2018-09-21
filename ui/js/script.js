@@ -21,7 +21,7 @@ function addItem(clicked_id) {
     var li = document.createElement("li");
     var order_item = document.getElementById(clicked_id).childNodes[3].innerText;
     var price = document.getElementById(clicked_id).childNodes[5].innerText;
-    var listitem = `${order_item} --- ${price}`
+    var listitem = `${order_item} --- ${price}`;
     li.appendChild(document.createTextNode(listitem));
     ul.appendChild(li);
 }
