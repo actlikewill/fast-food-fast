@@ -1,16 +1,14 @@
 """
 This creates the resources and endpoints for the api
 """
-from flask import jsonify, request
+from flask import request
 from flask_restful import Resource, Api, abort
-from . import  API_V1
-from .models import Orders, Menu
+from .. import  API_V1
+from .order_models import Orders
+from ..menu.menu_views import MENU
 
 API = Api(API_V1)
 ORDERS = Orders()
-MENU = Menu()
-
-
 
 class GetOrders(Resource):
     """This responds to queries to the whole order class"""
@@ -24,18 +22,19 @@ class GetOrders(Resource):
     @classmethod
     def post(cls):
         """This receives arguments and creates an order"""
-        # if not request.args:
-        #     return jsonify({"sorry":"no arguments passed"})
-        # if not request.args.get('item'):
-        #     return jsonify({"sorry":"no item argument passed"})
-        # if not request.args.get('quantity'):
-        #     return jsonify({"sorry":"no quantity argument passed"})
-
         json_data = request.get_json()
+        item = json_data['item']
+        quantity = json_data['quantity']
+        menu = MENU.menu
+        menu_item = [menu_item for menu_item in menu if menu_item['menu_item'] == item]
+        if not menu_item:
+            return {"menu_item":"Not found"}, 404 
+        price = menu_item[0]['price'] * quantity       
         order = {
-            "item": json_data['item'],
+            "item": item,
             "quantity": json_data['quantity'],
             "order_id":len(ORDERS.order_list) + 1,
+            "price": price,
             "status": json_data['status']
         }
         ORDERS.add_order(order)
@@ -63,26 +62,7 @@ class SingleOrder(Resource):
             abort(404, message='error')
         json_data = request.get_json()
         order[0]['status'] = json_data['status']
-        return {'Updated order': order[0]}, 201
-
-
-class GetMenu(Resource):
-    @classmethod
-    def get(cls):
-        return {"Menu": MENU.menu}
-    
-    @classmethod
-    def post(cls):
-        json_data = request.get_json()
-        new_menu_item = {
-            "menu_id": len(MENU.menu) + 1,
-            "menu_item": json_data["menu_item"],
-            "price": json_data["price"]
-        }
-        MENU.add_menu_item(new_menu_item)
-        return {"Menu item added": new_menu_item}
+        return {'Updated order': order[0]}, 201\
 
 API.add_resource(GetOrders, '/orders', endpoint='orders')
 API.add_resource(SingleOrder, '/orders/<int:order_id>', endpoint='order')
-API.add_resource(GetMenu, '/menu', endpoint='menu')
-
