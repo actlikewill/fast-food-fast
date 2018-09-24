@@ -6,6 +6,7 @@ from flask_restful import Resource, Api, abort
 from .. import  API_V1
 from .order_models import Orders
 from ..menu.menu_views import MENU
+from ..helpers.helpers import get_dict_item
 
 API = Api(API_V1)
 ORDERS = Orders()
@@ -24,23 +25,22 @@ class GetOrders(Resource):
     def post(cls):
         """This receives arguments and creates an order"""
         order_data = request.get_json()
+        if not order_data:
+            return {"Error": "You did not enter anything"}
         menu = MENU.menu
-        menu_list = []
-        order_keys = []
+        menu_keys = MENU.get_menu_keys()
+        order_keys = ORDERS.get_order_keys(order_data)
         price = 0
         new_order = {}
 
-        for menu_item in menu:
-            menu_list.append(menu_item['menu_item'])
+        """Checks if the items are in the menu"""
+        out_of_stock = set(order_keys) - set(menu_keys)        
 
-        for key in order_data.keys():
-            order_keys.append(key)
 
-        not_available = set(order_keys) - set(menu_list)
-
-        if not not_available:
+        """If the items are available go ahead and process the order"""
+        if not out_of_stock:
             for key, value in order_data.items():
-                menu_item = [menu_item for menu_item in menu if menu_item['menu_item'] == key]
+                menu_item = get_dict_item(menu, 'menu_item', key)
                 price += menu_item[0]['price'] * value
                 new_order[key] = value
 
@@ -48,19 +48,22 @@ class GetOrders(Resource):
             new_order['status'] = "pending"
             new_order['total_price'] = price
             ORDERS.add_order(new_order)
+            ORDERS.reset_order_keys()
             return {"Your_order": new_order}, 201
+
+        """If not available show which items are not available"""
         string = ''
-        for i in not_available:
+        for i in out_of_stock:
             string += "{}, ".format(i)
+        ORDERS.reset_order_keys()
         return {"Error":"The following items are not on the menu. {}".format(string)}, 404
 
 class SingleOrder(Resource):
     """This responds to single order requests using the unique order id"""
     @classmethod
     def get(cls, order_id):
-        """Returns a single order"""
-        orders = ORDERS.order_list
-        order = [order for order in orders if order['order_id'] == order_id]
+        """Returns a single order"""        
+        order = ORDERS.get_order(order_id)
         if not order:
             abort(404, message='error')
         return {'Your order': order[0]}
@@ -71,7 +74,7 @@ class SingleOrder(Resource):
         orders = ORDERS.order_list
         if not orders:
             abort(404, message='error')
-        order = [order for order in orders if order['order_id'] == order_id]
+        order = ORDERS.get_order(order_id)
         if not order:
             abort(404, message='error')
         json_data = request.get_json()

@@ -1,22 +1,15 @@
 """
 This creates the resources and endpoints for the menu
 """
-import re
 from flask import request
 from flask_restful import Resource, Api, abort
 from .. import  API_V1
 from .menu_models import Menu
+from ..helpers.helpers import validate_string
 
 
 API = Api(API_V1)
 MENU = Menu()
-
-def validate_string(string):
-    """Simple string validation"""
-    result = re.match('^[a-zA-Z]*$', string)
-    if result and len(string) != 0:
-        return "Valid"
-    return "Invalid"
 
 class GetMenu(Resource):
     """This gets the menu list"""
@@ -45,8 +38,7 @@ class GetSingleMenuItem(Resource):
     @classmethod
     def get(cls, menu_item_id):
         """Returns a single menu_item"""
-        menu = MENU.menu
-        menu_item = [menu_item for menu_item in menu if menu_item['menu_id'] == menu_item_id]
+        menu_item = MENU.get_menu_item(menu_item_id)
         if not menu_item:
             abort(404, message='error. That item does not exist')
         return {'Menu_item': menu_item[0]}
@@ -57,7 +49,7 @@ class GetSingleMenuItem(Resource):
         menu = MENU.menu
         if not menu:
             abort(404, message='error. That item does not exist')
-        menu_item = [menu_item for menu_item in menu if menu_item['menu_id'] == menu_item_id]
+        menu_item = MENU.get_menu_item(menu_item_id)
         if not menu_item:
             abort(404, message='error. That item does not exist')
         json_data = request.get_json()
