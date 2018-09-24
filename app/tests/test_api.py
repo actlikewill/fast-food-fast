@@ -4,7 +4,7 @@ from flask import json
 from app import create_app
 
 json_data = [
-    {    
+    {
 	"Burger":2
     },
     {
