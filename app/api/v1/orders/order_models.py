@@ -25,7 +25,7 @@ class Orders:
         for key in order_data.keys():
             self.order_keys.append(key)
         return self.order_keys
-    
+
     def reset_order_keys(self):
         """Clears the current order keys to prepare for the next order"""
         self.order_keys = []

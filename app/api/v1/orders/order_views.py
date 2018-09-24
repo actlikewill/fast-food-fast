@@ -33,11 +33,8 @@ class GetOrders(Resource):
         price = 0
         new_order = {}
 
-        """Checks if the items are in the menu"""
-        out_of_stock = set(order_keys) - set(menu_keys)        
+        out_of_stock = set(order_keys) - set(menu_keys)
 
-
-        """If the items are available go ahead and process the order"""
         if not out_of_stock:
             for key, value in order_data.items():
                 menu_item = get_dict_item(menu, 'menu_item', key)
@@ -51,7 +48,6 @@ class GetOrders(Resource):
             ORDERS.reset_order_keys()
             return {"Your_order": new_order}, 201
 
-        """If not available show which items are not available"""
         string = ''
         for i in out_of_stock:
             string += "{}, ".format(i)
@@ -62,7 +58,7 @@ class SingleOrder(Resource):
     """This responds to single order requests using the unique order id"""
     @classmethod
     def get(cls, order_id):
-        """Returns a single order"""        
+        """Returns a single order"""
         order = ORDERS.get_order(order_id)
         if not order:
             abort(404, message='error')
