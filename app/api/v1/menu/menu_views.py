@@ -5,9 +5,16 @@ from flask import request
 from flask_restful import Resource, Api, abort
 from .. import  API_V1
 from .menu_models import Menu
+import re
 
 API = Api(API_V1)
 MENU = Menu()
+
+def validate_string(string):
+    result = re.match('^[a-zA-Z]*$', string)
+    if result and len(string) != 0:    
+        return "Valid"
+    return "Invalid"
 
 class GetMenu(Resource):   
     @classmethod
@@ -19,6 +26,9 @@ class GetMenu(Resource):
     def post(cls):
         """This adds a new menu item"""
         json_data = request.get_json()
+        menu_item = json_data["menu_item"]
+        if validate_string(menu_item) == "Invalid":
+            return {"Error": "Food item must be valid string, no special charactes or empty strings"}
         new_menu_item = {
             "menu_id": len(MENU.menu) + 1,
             "menu_item": json_data["menu_item"],

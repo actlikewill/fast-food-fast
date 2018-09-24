@@ -5,9 +5,7 @@ from app import create_app
 
 json_data = [
     {    
-	"item":"Burger",
-	"quantity":2,
-	"status":"Pending"    
+	"Burger":2	    
     },
     {
 	"item":"Chicken",
@@ -47,13 +45,14 @@ def test_orders_post_burger(client):
 
 def test_get_orders(client):
     response = client.get('/api/v1/orders')
+    assert b'Burger' in response.data
     assert response.status_code == 200
 
 def test_orders_post_chicken(client):
     response = client.post('/api/v1/orders', data=json.dumps(json_data[1]),
                              content_type='application/json')
     assert response.status_code == 404
-    assert b'Not found' in response.data
+    assert b'Error' in response.data
 
 def test_update_orders(client):
     response = client.put('/api/v1/orders/1', data=json.dumps(json_data[2]),
