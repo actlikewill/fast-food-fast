@@ -5,14 +5,14 @@ from app import create_app
 
 json_data = [
     {    
-	"Burger":2	    
+	"Burger":2
     },
     {
 	"item":"Chicken",
 	"quantity":2,
 	"status":"Pending"
     },
-    {	
+    {
 	"status":"accepted"
     },
     {
@@ -30,7 +30,7 @@ json_data = [
 def client(request):
     test_client = create_app('default').test_client()
     return test_client
-    
+
 def test_add_menu_item(client):
     response = client.post('/api/v1/menu', data=json.dumps(json_data[3]),
                              content_type='application/json')

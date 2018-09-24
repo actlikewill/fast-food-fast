@@ -19,11 +19,11 @@ class GetOrders(Resource):
         if not orders:
             return {"sorry": "no orders yet"}
         return {'Orders': ORDERS.order_list}
-        
+
     @classmethod
     def post(cls):
         """This receives arguments and creates an order"""
-        order_data = request.get_json()      
+        order_data = request.get_json()
         menu = MENU.menu
         menu_list = []
         order_keys = []
@@ -38,10 +38,10 @@ class GetOrders(Resource):
 
         not_available = set(order_keys) - set(menu_list)
 
-        if not not_available:                
-            for key, value in order_data.items():   
+        if not not_available:
+            for key, value in order_data.items():
                 menu_item = [menu_item for menu_item in menu if menu_item['menu_item'] == key]
-                price += menu_item[0]['price'] * value   
+                price += menu_item[0]['price'] * value
                 new_order[key] = value
 
             new_order['order_id'] = len(ORDERS.order_list) + 1
@@ -52,7 +52,7 @@ class GetOrders(Resource):
         string = ''
         for i in not_available:
             string += "{}, ".format(i)
-        return {"Error":"The following items are not on the menu. {}".format(string)} , 404       
+        return {"Error":"The following items are not on the menu. {}".format(string)}, 404
 
 class SingleOrder(Resource):
     """This responds to single order requests using the unique order id"""
