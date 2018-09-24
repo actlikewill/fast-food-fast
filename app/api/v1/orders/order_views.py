@@ -6,7 +6,6 @@ from flask_restful import Resource, Api, abort
 from .. import  API_V1
 from .order_models import Orders
 from ..menu.menu_views import MENU
-from ..helpers.helpers import get_dict_item
 
 API = Api(API_V1)
 ORDERS = Orders()
@@ -27,7 +26,7 @@ class GetOrders(Resource):
         order_data = request.get_json()
         if not order_data:
             return {"Error": "You did not enter anything"}
-        menu = MENU.menu
+
         menu_keys = MENU.get_menu_keys()
         order_keys = ORDERS.get_order_keys(order_data)
         price = 0
@@ -36,10 +35,10 @@ class GetOrders(Resource):
         out_of_stock = set(order_keys) - set(menu_keys)
 
         if not out_of_stock:
-            for key, value in order_data.items():
-                menu_item = get_dict_item(menu, 'menu_item', key)
-                price += menu_item[0]['price'] * value
-                new_order[key] = value
+            for item, quantity in order_data.items():
+                menu_item = MENU.get_menu_item('menu_item', item)
+                price += menu_item[0]['price'] * quantity
+                new_order[item] = quantity
 
             new_order['order_id'] = len(ORDERS.order_list) + 1
             new_order['status'] = "pending"

@@ -2,11 +2,11 @@
 
 import re
 
-def get_dict_item(dict_list, key, var):
+def get_dict_item(dict_list, key, value):
     """Loops through a list of dictionaries and returns the one
         with the key value pair
     """
-    item = [item for item in dict_list if item[key] == var]
+    item = [item for item in dict_list if item[key] == value]
     return item
 
 def validate_string(string):

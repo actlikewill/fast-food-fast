@@ -24,7 +24,7 @@ class GetMenu(Resource):
         json_data = request.get_json()
         menu_item = json_data["menu_item"]
         if validate_string(menu_item) == "Invalid":
-            return {"Error": "Food item must be valid string, no special charactes or empty strings"}
+            return {"Error": "Invalid string, Do not use special charactes or empty strings"}
         new_menu_item = {
             "menu_id": len(MENU.menu) + 1,
             "menu_item": json_data["menu_item"],
@@ -38,7 +38,7 @@ class GetSingleMenuItem(Resource):
     @classmethod
     def get(cls, menu_item_id):
         """Returns a single menu_item"""
-        menu_item = MENU.get_menu_item(menu_item_id)
+        menu_item = MENU.get_menu_item("menu_id", menu_item_id)
         if not menu_item:
             abort(404, message='error. That item does not exist')
         return {'Menu_item': menu_item[0]}
@@ -49,7 +49,7 @@ class GetSingleMenuItem(Resource):
         menu = MENU.menu
         if not menu:
             abort(404, message='error. That item does not exist')
-        menu_item = MENU.get_menu_item(menu_item_id)
+        menu_item = MENU.get_menu_item("menu_id", menu_item_id)
         if not menu_item:
             abort(404, message='error. That item does not exist')
         json_data = request.get_json()

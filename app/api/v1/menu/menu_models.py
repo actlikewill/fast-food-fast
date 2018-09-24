@@ -18,8 +18,11 @@ class Menu:
             self.menu_list.append(menu_item['menu_item'])
         return self.menu_list
 
-    def get_menu_item(self, menu_id):
-        """Gets a specific menu item from the menu"""
-        menu_item = get_dict_item(self.menu, 'menu_id', menu_id)
+    def get_menu_item(self, key, value):
+        """Gets a specific menu item from the menu
+            The first argument is the key to use,
+            The second argument is the value
+        """
+        menu_item = get_dict_item(self.menu, key, value)
         return menu_item
         
