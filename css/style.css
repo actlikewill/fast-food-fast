@@ -18,6 +18,19 @@ header {
     justify-content: space-between;
 }
 
+footer {
+    height: 30px;
+    background-color: #FCEA4C;;    
+    color: white;
+    text-align: center;
+    opacity:.9
+    
+}
+footer p {
+    padding-top:5px;
+    display: block
+}
+
 /* Navigation Styles */
 
 .nav {
@@ -70,6 +83,7 @@ header {
 
 .heading {
     margin: 10px auto;
+    padding-top: 20px;
     text-align:center;
 }
 
@@ -92,6 +106,14 @@ form {
 .form-submit {
     display:block;
     margin-top: 20px;
+    background-color: #ff6666;
+
+}
+
+.form-submit:hover {
+    
+    background-color: #cc0000;
+    transition: .3s
 }
 
 input {
@@ -163,6 +185,9 @@ input:focus {
 
 .menu-item {
     border: 1px solid #ccc;
+    background-color: rgb(255, 207, 179);
+    opacity: 1;
+    transition:.3s;
     border-radius: 3px;
     margin-left:5px;
     margin-bottom: 5px;
@@ -173,7 +198,15 @@ input:focus {
 }
 
 .menu-item:hover {
-    background: #ccc;
+    background-color: rgb(248, 172, 129);        
+    box-shadow: 10 10px 10px rgba(156, 57, 0, 0.596), 10 10px 20px rgba(224, 14, 14, 0.671);    
+
+}
+
+.menu-item:active {
+    background-color: rgb(255, 179, 155);        
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.144), 0 1px 2px rgba(0, 0, 0, 0.459);    
+
 }
 
 .menu-text, .menu-price {
@@ -188,6 +221,7 @@ input:focus {
 .row {
     display: flex;
     padding: 20px;
+    padding-bottom:40px;
 }
 .order {    
     margin-left: 20px;
@@ -195,6 +229,7 @@ input:focus {
     width:40%;
     position: relative;    
     min-height: 100px;
+    background-color: rgb(255, 207, 179);
 }
 
 .order-heading {
@@ -211,6 +246,7 @@ input:focus {
      padding: 5px;
      margin-bottom: 5px;
      display:block;
+     font-weight: 900
 
  }
 
@@ -330,25 +366,58 @@ input:focus {
     color: white;
  }
 
+ .add {
+     width:100%;
+     border: 1px solid rgb(131, 131, 131);
+    background-color: rgb(233, 233, 233);
+ }
+
+ .add:hover{
+    border: 1px solid rgb(83, 83, 83);
+    background-color: rgb(83, 83, 83);
+    color: white;
+ }
+
  .add-form {    
     padding: 6px 12px;
     border: 1px solid #ccc;  
     
 }
 
+.viewport {
+    min-height: calc(100vh - 130px);
+}
+
+.flex {
+    display:flex;
+    justify-content: space-around
+}
+
 /* Media queries */
 
 @media screen and (min-width: 814px) {   
-  
+    body{
+        background-image: url('../img/blur-burger-close-up-460599.jpg');
+        background-repeat: no-repeat;
+        background-size:100%;
+        background-attachment: fixed 
+    }
     .main {
         border:1px solid #ccc;
         width: 80%;
-        margin:5px auto;
+        margin:20px auto;
         border-radius: 10px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-        min-height: 600px;     
-    
+        min-height: 400px;
+        background-color: white;
+        opacity:.8;
+
+            
+    }
+
+    .menu-item {
+        background-color: rgb(255, 207, 179);
     }
     
 }
@@ -356,7 +425,11 @@ input:focus {
 @media screen and (max-width:814px) {   
   
     .menu-item {          
-        width: 100%
+        width: 100%;
+        background-color:white;
+    }
+    .order {
+        background-color:white;
     }
     
 }
