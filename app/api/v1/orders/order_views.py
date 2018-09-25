@@ -17,7 +17,7 @@ class GetOrders(Resource):
         """This gets the list of all orders if any"""
         orders = ORDERS.order_list
         if not orders:
-            return {"sorry": "no orders yet"}
+            return {"sorry": "no orders yet"}, 404
         return {'Orders': ORDERS.order_list}
 
     @classmethod

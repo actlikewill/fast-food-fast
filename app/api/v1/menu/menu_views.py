@@ -23,7 +23,7 @@ class GetMenu(Resource):
         """This adds a new menu item"""
         json_data = request.get_json()
 
-        try:       
+        try:
 
             menu_item = json_data["menu_item"]
             if validate_string(menu_item) == "Invalid":

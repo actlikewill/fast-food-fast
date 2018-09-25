@@ -38,6 +38,34 @@ def test_add_menu_item(client):
     assert b'Burger' in response.data
     assert response.status_code == 201
 
+def test_update_orders_no_orders(client):
+    response = client.put('/api/v1/orders/1', data=json.dumps(json_data[2]),
+                             content_type='application/json')
+    assert b'error' in response.data
+    assert response.status_code == 404
+
+def test_update_orders_not_exists(client):
+    response = client.put('/api/v1/orders/4', data=json.dumps(json_data[2]),
+                             content_type='application/json')
+    assert b'error' in response.data
+    assert response.status_code == 404
+
+def test_get_menu_item_error(client):
+    response = client.get('/api/v1/menu/4')
+    assert response.status_code == 404
+    assert b'error' in response.data
+
+def test_get_menu_item(client):
+    response = client.get('/api/v1/menu/1')
+    assert response.status_code == 200
+    assert b'Burger' in response.data
+
+def test_get_orders_error(client):
+    response = client.get('/api/v1/orders')
+    assert b'sorry' in response.data
+    assert response.status_code == 404
+
+
 def test_orders_post_burger(client):
     response = client.post('/api/v1/orders', data=json.dumps(json_data[0]),
                              content_type='application/json')
@@ -53,6 +81,12 @@ def test_orders_post_chicken(client):
     response = client.post('/api/v1/orders', data=json.dumps(json_data[1]),
                              content_type='application/json')
     assert response.status_code == 404
+    assert b'Error' in response.data
+
+def test_orders_post_error_integer(client):
+    response = client.post('/api/v1/orders', data=json.dumps({"Burger":""}),
+                             content_type='application/json')
+    assert response.status_code == 400
     assert b'Error' in response.data
 
 def test_update_orders(client):
@@ -81,6 +115,12 @@ def test_update_menu(client):
     assert b'Ice Cream' in response.data
     assert response.status_code == 201
 
+def test_update_menu_error(client):
+    response = client.put('/api/v1/menu/1', data=json.dumps({}),
+                                content_type='application/json')
+    assert b'Error' in response.data
+    assert response.status_code == 400   
+
 def test_out_of_stock(client):
     response = client.post('/api/v1/orders', data=json.dumps(json_data[5]),
                             content_type='application/json')
@@ -92,4 +132,17 @@ def test_invalid_order(client):
                             content_type='application/json')
     assert response.status_code == 400
     assert b'Error' in response.data
+
+def test_add_menu_item_error(client):
+    response = client.post('api/v1/menu', data=json.dumps({"error":2}),
+                            content_type='application/json')
+    assert response.status_code == 400
+    assert b'Error' in response.data
+
+def test_update_order_error(client):
+    response = client.put('api/v1/orders/1', data=json.dumps({"error":"error"}),
+                            content_type='application/json')
+    assert response.status_code == 400
+    assert b'Error' in response.data
+
     
