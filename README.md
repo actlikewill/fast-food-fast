@@ -20,7 +20,7 @@ This branch created the endpoints for the api that will be used in the applicati
 |`GET /api/menu`| To view to menu items |
 |`POST` /api/menu | To add new menu items |
 |`GET /api/menu/<menu_id>`| To view a single menu item details |
-|`PUT| /api/menu/<menu_id>`| To edit a single menu item using the id|
+|`PUT /api/menu/<menu_id>`| To edit a single menu item using the id|
 
 
 Create a folder and clone the repository using the following command:
