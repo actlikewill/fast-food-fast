@@ -119,7 +119,7 @@ def test_update_menu_error(client):
     response = client.put('/api/v1/menu/1', data=json.dumps({}),
                                 content_type='application/json')
     assert b'Error' in response.data
-    assert response.status_code == 400   
+    assert response.status_code == 400
 
 def test_out_of_stock(client):
     response = client.post('/api/v1/orders', data=json.dumps(json_data[5]),
@@ -144,5 +144,4 @@ def test_update_order_error(client):
                             content_type='application/json')
     assert response.status_code == 400
     assert b'Error' in response.data
-
     
