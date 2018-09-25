@@ -8,9 +8,7 @@ json_data = [
 	"Burger":2
     },
     {
-	"item":"Chicken",
-	"quantity":2,
-	"status":"Pending"
+	"Chicken":4
     },
     {
 	"status":"accepted"
@@ -22,6 +20,9 @@ json_data = [
     {
     "menu_item":"Ice Cream",
     "price": 400
+    },
+    {
+    "Sandwich": 5
     }
     ]
 
@@ -79,4 +80,16 @@ def test_update_menu(client):
                              content_type='application/json')
     assert b'Ice Cream' in response.data
     assert response.status_code == 201
+
+def test_out_of_stock(client):
+    response = client.post('/api/v1/orders', data=json.dumps(json_data[5]),
+                            content_type='application/json')
+    assert response.status_code == 404
+    assert b'not on the menu' in response.data
+
+def test_invalid_order(client):
+    response = client.post('/api/v1/orders', data=json.dumps({}),
+                            content_type='application/json')
+    assert response.status_code == 400
+    assert b'Error' in response.data
     

@@ -22,16 +22,21 @@ class GetMenu(Resource):
     def post(cls):
         """This adds a new menu item"""
         json_data = request.get_json()
-        menu_item = json_data["menu_item"]
-        if validate_string(menu_item) == "Invalid":
-            return {"Error": "Invalid string, Do not use special charactes or empty strings"}
-        new_menu_item = {
-            "menu_id": len(MENU.menu) + 1,
-            "menu_item": json_data["menu_item"],
-            "price": json_data["price"]
-        }
-        MENU.add_menu_item(new_menu_item)
-        return {"Menu item added": new_menu_item}, 201
+
+        try:       
+
+            menu_item = json_data["menu_item"]
+            if validate_string(menu_item) == "Invalid":
+                return {"Error": "Invalid string, Do not use special charactes or empty strings"}
+            new_menu_item = {
+                "menu_id": len(MENU.menu) + 1,
+                "menu_item": json_data["menu_item"],
+                "price": json_data["price"]
+            }
+            MENU.add_menu_item(new_menu_item)
+            return {"Menu item added": new_menu_item}, 201
+        except KeyError:
+            return {"Error": "This endpoint accepts requests in the following format: 'menu_item':<string>,'price':<integer>. Use double quotes on the key words and string values"}, 400
 
 class GetSingleMenuItem(Resource):
     """This responds to single menu_item requests using the unique menu_item id"""
@@ -46,16 +51,19 @@ class GetSingleMenuItem(Resource):
     @classmethod
     def put(cls, menu_item_id):
         """Updates a single menu item"""
-        menu = MENU.menu
-        if not menu:
-            abort(404, message='error. That item does not exist')
-        menu_item = MENU.get_menu_item("menu_id", menu_item_id)
-        if not menu_item:
-            abort(404, message='error. That item does not exist')
-        json_data = request.get_json()
-        menu_item[0]['menu_item'] = json_data['menu_item']
-        menu_item[0]['price'] = json_data['price']
-        return {'Updated menu': menu_item[0]}, 201
+        try:
+            menu = MENU.menu
+            if not menu:
+                abort(404, message='error. That item does not exist')
+            menu_item = MENU.get_menu_item("menu_id", menu_item_id)
+            if not menu_item:
+                abort(404, message='error. That item does not exist')
+            json_data = request.get_json()
+            menu_item[0]['menu_item'] = json_data['menu_item']
+            menu_item[0]['price'] = json_data['price']
+            return {'Updated menu': menu_item[0]}, 201
+        except KeyError:
+            return {"Error": "Please enter a valid item. 'menu_item':<string>, 'price':<integer>"}, 400
 
 API.add_resource(GetMenu, '/menu', endpoint='menu')
 API.add_resource(GetSingleMenuItem, '/menu/<int:menu_item_id>', endpoint='singlemenu')

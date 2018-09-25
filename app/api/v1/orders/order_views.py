@@ -25,7 +25,7 @@ class GetOrders(Resource):
         """This receives arguments and creates an order"""
         order_data = request.get_json()
         if not order_data:
-            return {"Error": "You did not enter anything"}
+            return {"Error": "You did not enter anything"}, 400
 
         menu_keys = MENU.get_menu_keys()
         order_keys = ORDERS.get_order_keys(order_data)
@@ -33,25 +33,26 @@ class GetOrders(Resource):
         new_order = {}
 
         out_of_stock = set(order_keys) - set(menu_keys)
+        try:
+            if not out_of_stock:
+                for item, quantity in order_data.items():
+                    menu_item = MENU.get_menu_item('menu_item', item)
+                    price += menu_item[0]['price'] * quantity
+                    new_order[item] = quantity
 
-        if not out_of_stock:
-            for item, quantity in order_data.items():
-                menu_item = MENU.get_menu_item('menu_item', item)
-                price += menu_item[0]['price'] * quantity
-                new_order[item] = quantity
-
-            new_order['order_id'] = len(ORDERS.order_list) + 1
-            new_order['status'] = "pending"
-            new_order['total_price'] = price
-            ORDERS.add_order(new_order)
-            ORDERS.reset_order_keys()
-            return {"Your_order": new_order}, 201
-
+                new_order['order_id'] = len(ORDERS.order_list) + 1
+                new_order['status'] = "pending"
+                new_order['total_price'] = price
+                ORDERS.add_order(new_order)
+                ORDERS.reset_order_keys()
+                return {"Your_order": new_order}, 201
+        except TypeError:
+            return {"Error": "Please enter a valid integer for the quantity"}, 400
         string = ''
         for i in out_of_stock:
             string += "{}, ".format(i)
         ORDERS.reset_order_keys()
-        return {"Error":"The following items are not on the menu. {}".format(string)}, 404
+        return {"Error":"The following items are not on the menu. {}. Enter a menu_item as key, and an integer quantity as the value: '<menu_item>':'<quantity>'. Use double quotes on the menu_item".format(string)}, 404
 
 class SingleOrder(Resource):
     """This responds to single order requests using the unique order id"""
@@ -61,20 +62,23 @@ class SingleOrder(Resource):
         order = ORDERS.get_order(order_id)
         if not order:
             abort(404, message='error')
-        return {'Your order': order[0]}
+        return {'Your order': order[0]}, 200
 
     @classmethod
     def put(cls, order_id):
         """Updates a single order"""
-        orders = ORDERS.order_list
-        if not orders:
-            abort(404, message='error')
-        order = ORDERS.get_order(order_id)
-        if not order:
-            abort(404, message='error')
-        json_data = request.get_json()
-        order[0]['status'] = json_data['status']
-        return {'Updated order': order[0]}, 201
+        try:
+            orders = ORDERS.order_list
+            if not orders:
+                abort(404, message='error')
+            order = ORDERS.get_order(order_id)
+            if not order:
+                abort(404, message='error. Order does not exist')
+            json_data = request.get_json()
+            order[0]['status'] = json_data['status']
+            return {'Updated order': order[0]}, 201
+        except KeyError:
+            return {"Error": "Please enter 'status':'accepted' or 'declined'"}, 400
 
 API.add_resource(GetOrders, '/orders', endpoint='orders')
 API.add_resource(SingleOrder, '/orders/<int:order_id>', endpoint='order')
