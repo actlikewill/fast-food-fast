@@ -17,7 +17,7 @@ Thisthe following endpoints for the api are available.
 | `POST /api/v1/orders` | To place an order  |
 | `PUT /api/v1/orders?status=<accepted> or <declined>`| To update the status of an order  |
 |`GET /api/menu`| To view to menu items |
-|`POST` /api/menu | To add new menu items |
+|`POST /api/menu` | To add new menu items |
 |`GET /api/menu/<menu_id>`| To view a single menu item details |
 |`PUT /api/menu/<menu_id>`| To edit a single menu item using the id|
 
@@ -126,4 +126,4 @@ Wilson Gaturu in collaboration with Andela Developers
 
 ## Acknowledgments
 
-Big thanks to the team at Andela for making this possible. :)
+Big thanks to the team at Andela for making this possible and May the code be with you! :)
