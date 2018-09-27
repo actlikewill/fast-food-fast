@@ -6,15 +6,19 @@ language: python
 python:
   - "3.6"
 
+
 install: 
   - pip install -r requirements.txt
   - pip install pytest-cov
   - pip install coveralls
 
+services: postgresql
+
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - "psql -c 'create database api;' -U postgres"
 
 script:
   - pytest
