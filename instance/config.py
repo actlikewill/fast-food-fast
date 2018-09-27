@@ -9,10 +9,12 @@ class Config(object):
         """This initializes the app instance"""
         pass
 
+    SECRET_KEY = "youwillneverknow"
+
 class DevelopmentConfig(Config):
     """Development configurations"""
     DEBUG = True
-    DATABASE_URL = ("dbname=api username=postgres password=wilson host=127.0.0.1 port=5000")
+    DATABASE_URL = "dbname=api host=127.0.0.1 port=5432 user=postgres password=wilson"
 
 class ProductionConfig(Config):
     """Production configurations"""
