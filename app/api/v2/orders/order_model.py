@@ -27,3 +27,12 @@ class Orders:
                 """
         return query
 
+    @classmethod
+    def update_order_status(cls, status, order_id):
+        query = """
+                UPDATE orders SET status = {} WHERE id = '{}';
+                """.format(status, order_id)
+        return query
+
+    
+

@@ -1,4 +1,5 @@
 from flask import jsonify, request
+import psycopg2
 from ....db.db import connect
 from .. import API_V2
 from .order_model import Orders
@@ -32,7 +33,7 @@ def add_order(current_user):
         success_message = """ New order {} Created""".format(details)
         return jsonify({"Success": success_message}), 201
     except(KeyError, TypeError):
-        return jsonify({"Error": "you did not enter data correctly"})
+        return jsonify({"Error": "you did not enter data correctly."})
 
 @API_V2.route('/orders/<int:order_id>', methods=['GET'])
 @token_required_jsonify
@@ -48,8 +49,26 @@ def get_one_order(current_user, order_id):
 
     return jsonify({"Order": row})
 
+@API_V2.route('/orders/<int:order_id>', methods=['PUT'])
+@token_required_jsonify
+def update_order(current_user, order_id):
+    if current_user['role'] != 'admin':
+        return jsonify({"Sorry": "Only admin allowed access to this route."})
 
-    
+    try:
+        data = request.get_json()
 
+        status = data['status']
 
-
+        query = Orders.update_order_status(status, order_id)
+        conn = connect()
+        cur = conn.cursor()
+        cur.execute(query)
+        cur.close()
+        conn.commit()
+        success_message = """ Order Updated"""
+        return jsonify({"Success": success_message}), 201
+    except(KeyError, TypeError):
+        return jsonify({"Error": "you did not enter data correctly. Required key is 'status'"})
+    except(psycopg2.ProgrammingError):
+        return jsonify({"Syntax Error": "Place single quotes within the outer double quotes "})    
