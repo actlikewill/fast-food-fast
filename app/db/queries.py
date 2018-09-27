@@ -1,6 +1,7 @@
 q1 = """
     CREATE TABLE IF NOT EXISTS orders(
     id SERIAL PRIMARY KEY,
+    ordered_by VARCHAR(1000) NOT NULL,
     details VARCHAR(1000) NOT NULL,
     price VARCHAR(255) NOT NULL,
     status VARCHAR(255)

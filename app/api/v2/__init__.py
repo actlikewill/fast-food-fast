@@ -5,4 +5,5 @@ from flask import Blueprint
 
 API_V2 = Blueprint('api_v2', __name__)
 
-from .menu import menu_views 
+from .menu import menu_views
+from .orders import order_views 

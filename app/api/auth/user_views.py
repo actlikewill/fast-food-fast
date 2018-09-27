@@ -72,7 +72,7 @@ def get_one_user_id(current_user, user_id):
     row = cur.fetchone()
 
     user = row
-    return jsonify({"User": row})
+    return jsonify({"User": user})
 
 
 @AUTH.route('/users', methods=['POST'])
