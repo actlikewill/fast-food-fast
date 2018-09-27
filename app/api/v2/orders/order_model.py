@@ -34,5 +34,12 @@ class Orders:
                 """.format(status, order_id)
         return query
 
+    @classmethod
+    def get_user_orders(cls, ordered_by):
+        query = """
+                SELECT * FROM orders WHERE ordered_by = '{}';
+                """.format(ordered_by)
+        return query  
+
     
 

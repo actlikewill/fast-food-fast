@@ -18,7 +18,7 @@ def get_orders(current_user):
 
     return jsonify({"Orders": rows})
 
-@API_V2.route('/orders', methods=['POST'])
+@API_V2.route('/users/orders', methods=['POST'])
 @token_required_jsonify
 def add_order(current_user):
     try:
@@ -72,3 +72,16 @@ def update_order(current_user, order_id):
         return jsonify({"Error": "you did not enter data correctly. Required key is 'status'"})
     except(psycopg2.ProgrammingError):
         return jsonify({"Syntax Error": "Place single quotes within the outer double quotes "})    
+
+
+@API_V2.route('/users/orders/<string:ordered_by>', methods=['GET'])
+@token_required_jsonify
+def get_single_user_orders(current_user, ordered_by):
+
+    query = Orders.get_user_orders(ordered_by)
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute(query)
+    row = cur.fetchall()
+
+    return jsonify({"Order": row})
