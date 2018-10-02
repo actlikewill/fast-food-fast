@@ -23,6 +23,10 @@ json_data = [
     },
     {
     "Sandwich": 5
+    },
+    {
+    "menu_item":"Burg3r",
+    "price": 250
     }
     ]
 
@@ -32,11 +36,23 @@ def client(request):
     test_client = create_app('default').test_client()
     return test_client
 
+def test_update_menu_item_no_menu(client):
+    response = client.put('/api/v1/menu/1', data=json.dumps(json_data[4]),
+                             content_type='application/json')
+    assert b'item does not exist' in response.data
+    assert response.status_code == 404
+
 def test_add_menu_item(client):
     response = client.post('/api/v1/menu', data=json.dumps(json_data[3]),
                              content_type='application/json')
     assert b'Burger' in response.data
     assert response.status_code == 201
+
+def test_add_menu_invalid_item(client):
+    response = client.post('/api/v1/menu', data=json.dumps(json_data[6]),
+                             content_type='application/json')
+    assert b'Invalid' in response.data
+    assert response.status_code == 400
 
 def test_update_orders_no_orders(client):
     response = client.put('/api/v1/orders/1', data=json.dumps(json_data[2]),
@@ -114,6 +130,12 @@ def test_update_menu(client):
                              content_type='application/json')
     assert b'Ice Cream' in response.data
     assert response.status_code == 201
+
+def test_update_menu_item_not_exist(client):
+    response = client.put('/api/v1/menu/10', data=json.dumps(json_data[4]),
+                             content_type='application/json')
+    assert b'item does not exist' in response.data
+    assert response.status_code == 404
 
 def test_update_menu_error(client):
     response = client.put('/api/v1/menu/1', data=json.dumps({}),

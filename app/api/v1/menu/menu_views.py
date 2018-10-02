@@ -27,7 +27,7 @@ class GetMenu(Resource):
 
             menu_item = json_data["menu_item"]
             if validate_string(menu_item) == "Invalid":
-                return {"Error": "Invalid string, Do not use special charactes or empty strings"}
+                return {"Error": "Invalid string, Do not use special charactes or empty strings"}, 400
             new_menu_item = {
                 "menu_id": len(MENU.menu) + 1,
                 "menu_item": json_data["menu_item"],
