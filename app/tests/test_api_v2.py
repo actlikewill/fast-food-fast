@@ -5,14 +5,14 @@ from manage import APP
 
 json_data = [
     {
-	"username":"NewUser",
-	"email":"user@example.com",
-	"password":"userpassword",
+	"username":"NewAdmin",
+	"email":"admin@example.com",
+	"password":"adminpassword",
 	"role":"admin"
     },
     {
-	"username":"Wilson",
-    "password":"wilassword"
+	"username":"NewAdmin",
+    "password":"adminpassword"
     },
     {
     "username":"error",
@@ -23,9 +23,16 @@ json_data = [
     "password":"error"
     },
     {
-	"username":"Sam",
-    "password":"sampassword"
+	"username":"NewUser",
+    "password":"userpassword"
     },
+    {
+	"username":"NewUser",
+	"email":"user@example.com",
+	"password":"userpassword",
+	"role":"user"
+    },
+
     
     ]
 
@@ -56,8 +63,13 @@ def get_user_token(client):
     }
     return header
 
-def test_create_user(client):
+def test_create_admin(client):
     response = client.post('/auth/users', data=json.dumps(json_data[0]),
+                             content_type='application/json')
+    assert b'Success' in response.data
+
+def test_create_user(client):
+    response = client.post('/auth/users', data=json.dumps(json_data[5]),
                              content_type='application/json')
     assert b'Success' in response.data
 
