@@ -10,7 +10,6 @@ from flask_jwt_extended import (
     get_jwt_identity
 )
 from flask_restful import Resource, Api
-from instance.config import Config
 from .user_models import Users
 from ...db.db import connect
 from flask import request, make_response
