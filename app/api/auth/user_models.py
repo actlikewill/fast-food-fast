@@ -1,5 +1,5 @@
 """
-This is the Basic user class. 
+This is the Basic user class.
 """
 class Users:
     """
@@ -21,7 +21,7 @@ class Users:
     @staticmethod
     def get_user_query(username):
 
-        query = """ 
+        query = """
                 SELECT username, password, role FROM users WHERE username = '{}';
                 """.format(username)
         return query
@@ -39,4 +39,4 @@ class Users:
         query = """ 
                 SELECT username, password, role FROM users WHERE id = '{}';
                 """.format(user_id)
-        return query    
+        return query

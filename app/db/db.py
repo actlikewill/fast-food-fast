@@ -2,8 +2,7 @@ import psycopg2
 from instance.config import DevelopmentConfig
 from .queries import queries
 
-db_url = DevelopmentConfig().DATABASE_URL 
-
+db_url = DevelopmentConfig().DATABASE_URL
 
 def connect():
     try:

@@ -1,5 +1,5 @@
 """
-This is the users view which will handle login and 
+This is the users view which will handle login and
 token generation
 """
 
@@ -9,7 +9,7 @@ from flask_jwt_extended import (
     jwt_required, create_access_token,
     get_jwt_identity
 )
-from flask_restful import Resource, Api, abort
+from flask_restful import Resource, Api
 from instance.config import Config
 from .user_models import Users
 from ...db.db import connect
@@ -26,11 +26,11 @@ class LoginUser(Resource):
         The login function generates the access token
         The payload consists of the username and the role
         """
-        data = request.get_json()    
+        data = request.get_json()
 
         if not data or not data['username'] or not data['password']:
             return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
-        
+
         query = Users.get_user_query(data['username'])
 
         conn = connect()
@@ -71,7 +71,7 @@ class GetUser(Resource):
         cur.execute(query)
         rows = cur.fetchall()
     
-        return {"Users" : rows}        
+        return {"Users" : rows}
 
     @staticmethod
     def post():
@@ -87,12 +87,12 @@ class GetUser(Resource):
             cur.execute(query)
             cur.close()
             conn.commit()
-            success_message = """ User {} Created""".format(user)        
+            success_message = """ User {} Created""".format(user)
             return  {"Success": success_message}, 201
         except KeyError:
-            return {"Error":"you did not enter data correctly"}, 400 
+            return {"Error":"You did not enter data correctly"}, 400
         except(psycopg2.ProgrammingError):
-            return {"Syntax Error":"Place single quotes within the double quotes. "}, 400
+            return {"Syntax Error":"You did not format data correctly. "}, 400
 
 
 class GetSingleUser(Resource):
@@ -104,12 +104,12 @@ class GetSingleUser(Resource):
         current_user = get_jwt_identity()
         role = current_user['role']
         if role != 'admin':
-            return jsonify({"Sorry": "Route restricted to admin only"}), 403
+            return {"Sorry": "Route restricted to admin only"}, 403
         query = Users.get_user_query_id(user_id)
         conn = connect()
         cur = conn.cursor()
         cur.execute(query)
-        user = cur.fetchone()       
+        user = cur.fetchone()
 
         return {"User": user}
 

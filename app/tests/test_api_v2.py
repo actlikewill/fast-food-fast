@@ -1,5 +1,4 @@
 import pytest
-from base64 import b64encode
 from flask import json
 from manage import APP
 
@@ -32,12 +31,16 @@ json_data = [
 	"password":"userpassword",
 	"role":"user"
     },
-
-    
+    {
+	"username":"'ErrorData'",
+	"email":"'error@example.com'",
+	"password":"'errorpassword'",
+	"role":"'error'"
+    }    
     ]
 
 @pytest.fixture
-def client(request):       
+def client(request):
     test_client = APP.test_client()
     return test_client
 
@@ -88,6 +91,11 @@ def test_get_single_user(client, get_admin_token):
     assert b'User' in response.data
     assert response.status_code == 200
 
+def test_get_single_user_no_admin(client, get_user_token):
+    response = client.get('/auth/users/1', headers=get_user_token)
+    assert b'Route restricted' in response.data
+    assert response.status_code == 403
+
 def test_login_error(client):
     response = client.post('/auth/login', data=json.dumps(json_data[2]),
                              content_type='application/json')
@@ -104,3 +112,16 @@ def test_get_users_no_admin(client, get_user_token):
     response = client.get('/auth/users', headers=get_user_token)
     assert b'admin only' in response.data
     assert response.status_code == 403
+
+def test_create_user_no_data(client):
+    response = client.post('/auth/users', data=json.dumps({}),
+                             content_type='application/json')
+    assert b'You did not enter data correctly' in response.data
+    assert response.status_code == 400
+
+def test_create_user_no_error_data(client):
+    response = client.post('/auth/users', data=json.dumps(json_data[6]),
+                             content_type='application/json')
+    assert b'Syntax Error' in response.data
+    assert response.status_code == 400
+
