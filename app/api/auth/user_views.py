@@ -13,9 +13,8 @@ from flask_restful import Resource, Api
 from instance.config import Config
 from .user_models import Users
 from ...db.db import connect
-from flask import request, jsonify, make_response
+from flask import request, make_response
 
-secret = Config().SECRET_KEY
 AUTH = Api(AUTH)
 
 class LoginUser(Resource):
@@ -44,7 +43,7 @@ class LoginUser(Resource):
         dbusername = row[0]
         dbpassword = row[1]
         dbrole = row[2]
-        
+
         if data['password'] != dbpassword:
             return {"Error":"Invalid Password"}, 401
         token = create_access_token(identity={"user":dbusername, "role":dbrole})
@@ -70,7 +69,7 @@ class GetUser(Resource):
         cur = conn.cursor()
         cur.execute(query)
         rows = cur.fetchall()
-    
+
         return {"Users" : rows}
 
     @staticmethod
@@ -91,7 +90,7 @@ class GetUser(Resource):
             return  {"Success": success_message}, 201
         except KeyError:
             return {"Error":"You did not enter data correctly"}, 400
-        except(psycopg2.ProgrammingError):
+        except psycopg2.ProgrammingError:
             return {"Syntax Error":"You did not format data correctly. "}, 400
 
 

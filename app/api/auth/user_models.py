@@ -36,7 +36,7 @@ class Users:
     @staticmethod
     def get_user_query_id(user_id):
 
-        query = """ 
+        query = """
                 SELECT username, password, role FROM users WHERE id = '{}';
                 """.format(user_id)
         return query

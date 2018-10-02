@@ -36,7 +36,7 @@ json_data = [
 	"email":"'error@example.com'",
 	"password":"'errorpassword'",
 	"role":"'error'"
-    }    
+    }
     ]
 
 @pytest.fixture
@@ -124,4 +124,3 @@ def test_create_user_no_error_data(client):
                              content_type='application/json')
     assert b'Syntax Error' in response.data
     assert response.status_code == 400
-
