@@ -170,4 +170,11 @@ def test_add_menu_items_no_data(client, get_admin_token):
     assert b'you did not enter data correctly' in response.data
     assert response.status_code == 400
 
+# def test_place_order(client, get_user_token):
+#     response = client.post('/api/v2/orders', headers=get_user_token,
+#                              data=json.dumps({}),
+#                              content_type='application/json')
+#     assert b'you did not enter data correctly' in response.data
+#     assert response.status_code == 400
+
 

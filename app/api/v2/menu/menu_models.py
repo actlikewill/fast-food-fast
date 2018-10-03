@@ -14,13 +14,13 @@ class Menu:
         return query
 
 
-    # @staticmethod
-    # def get_menu_query(menu_item):
+    @staticmethod
+    def get_menu_list():
 
-    #     query = """
-    #             SELECT menu_item, description, price FROM menu WHERE menu_item = '{}';
-    #             """.format(menu_item)
-    #     return query
+        query = """
+                SELECT menu_item, price FROM menu;
+                """
+        return query
 
     @staticmethod
     def get_all_menu_query():
