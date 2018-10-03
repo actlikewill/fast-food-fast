@@ -1,6 +1,8 @@
 import pytest
 from flask import json
+from app import create_app
 from manage import APP
+from flask_jwt_extended import JWTManager
 
 json_data = [
     {
@@ -60,8 +62,10 @@ json_data = [
     ]
 
 @pytest.fixture
-def client(request):
-    test_client = APP.test_client()
+def client(request):    
+    app = create_app('testing') 
+    JWTManager(app)
+    test_client = app.test_client()   
     return test_client
 
 @pytest.fixture
@@ -200,6 +204,17 @@ def test_place_order_error_out_of_stock(client, get_user_token):
                              content_type='application/json')
     assert b'following items are not on the menu' in response.data
     assert response.status_code == 404
+
+def test_get_all_orders(client, get_admin_token):
+    response = client.get('/api/v2/orders', headers=get_admin_token)
+    assert b'Orders' in response.data
+    assert response.status_code == 200
+
+def test_get_all_orders_no_admin(client, get_user_token):
+    response = client.get('/api/v2/orders', headers=get_user_token)
+    assert b'Only admin allowed' in response.data
+    assert response.status_code == 403
+
 
 
 

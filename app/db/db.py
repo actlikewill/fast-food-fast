@@ -32,3 +32,13 @@ def save_to_db(query):
     cur.execute(query)
     cur.close()
     conn.commit()
+
+def fetch_all_from_db(query):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute(query)
+    rows = cur.fetchall()
+    return rows
+
+def drop_test_tables():
+    pass

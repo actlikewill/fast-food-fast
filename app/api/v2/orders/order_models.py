@@ -20,12 +20,12 @@ class Orders:
     #             """.format(order_id)
     #     return query
 
-    # @staticmethod
-    # def get_all_orders():
-    #     query = """
-    #             SELECT * FROM orders
-    #             """
-    #     return query
+    @staticmethod
+    def get_all_orders():
+        query = """
+                SELECT * FROM orders
+                """
+        return query
 
     # @staticmethod
     # def update_order_status(status, order_id):
