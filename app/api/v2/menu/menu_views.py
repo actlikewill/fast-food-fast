@@ -1,6 +1,6 @@
 import psycopg2
 from flask import request
-from flask_restful import Resource, Api, abort
+from flask_restful import Resource, Api
 from ....db.db import connect
 from .. import API_V2
 from flask_jwt_extended import jwt_required, get_jwt_identity

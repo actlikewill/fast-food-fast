@@ -76,6 +76,11 @@ def get_user_token(client):
     }
     return header
 
+def test_view_menu(client):
+    response = client.get('/api/v2/menu')
+    assert b'Sorry' in response.data
+    assert response.status_code == 200
+
 def test_create_admin(client):
     response = client.post('/auth/users', data=json.dumps(json_data[0]),
                              content_type='application/json')
@@ -135,10 +140,6 @@ def test_create_user_no_error_data(client):
     assert b'Syntax Error' in response.data
     assert response.status_code == 400
 
-def test_view_menu(client):
-    response = client.get('/api/v2/menu')
-    assert b'Sorry' in response.data
-    assert response.status_code == 200
 
 def test_add_menu_items(client, get_admin_token):
     response = client.post('/api/v2/menu', headers=get_admin_token,
