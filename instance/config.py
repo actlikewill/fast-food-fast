@@ -22,9 +22,8 @@ class ProductionConfig(Config):
     DEBUG = False
 
 class TestingConfig(Config):
-        DATABASE_URL = "dbname=test_fastfoodfast host=127.0.0.1 port=5432 user=postgres password=wilson"
-        
-        
+    DATABASE_URL = "dbname=test_fastfoodfast host=127.0.0.1 port=5432 user=postgres password=wilson"
+
 CONFIG = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,

@@ -1,7 +1,6 @@
 import pytest
 from flask import json
 from app import create_app
-from manage import APP
 from flask_jwt_extended import JWTManager
 
 json_data = [
@@ -71,10 +70,10 @@ json_data = [
     ]
 
 @pytest.fixture
-def client(request):    
-    app = create_app('testing') 
+def client(request):
+    app = create_app('testing')
     JWTManager(app)
-    test_client = app.test_client()   
+    test_client = app.test_client()
     return test_client
 
 @pytest.fixture
