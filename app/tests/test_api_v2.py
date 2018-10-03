@@ -36,6 +36,16 @@ json_data = [
 	"email":"'error@example.com'",
 	"password":"'errorpassword'",
 	"role":"'error'"
+    },
+    {
+	"menu_item": "IceCream",
+	"description": "Flavor Full and creamy",
+	"price": 200
+    },
+    {
+	"menu_item": "'IceCream'",
+	"description": "'Flavor Full and creamy'",
+	"price": 200
     }
     ]
 
@@ -124,3 +134,43 @@ def test_create_user_no_error_data(client):
                              content_type='application/json')
     assert b'Syntax Error' in response.data
     assert response.status_code == 400
+
+def test_view_menu(client):
+    response = client.get('/api/v2/menu')
+    assert b'Sorry' in response.data
+    assert response.status_code == 200
+
+def test_add_menu_items(client, get_admin_token):
+    response = client.post('/api/v2/menu', headers=get_admin_token,
+                             data=json.dumps(json_data[7]),
+                             content_type='application/json')
+    assert b'Success' in response.data
+    assert response.status_code == 201
+
+def test_view_menu_new_item(client):
+    response = client.get('/api/v2/menu')
+    assert b'Menu' in response.data
+    assert response.status_code == 200
+
+def test_add_menu_items_no_admin(client, get_user_token):
+    response = client.post('/api/v2/menu', headers=get_user_token,
+                             data=json.dumps(json_data[7]),
+                             content_type='application/json')
+    assert b'restricted to admin' in response.data
+    assert response.status_code == 403
+
+def test_add_menu_items_error(client, get_admin_token):
+    response = client.post('/api/v2/menu', headers=get_admin_token,
+                             data=json.dumps(json_data[8]),
+                             content_type='application/json')
+    assert b'SyntaxError' in response.data
+    assert response.status_code == 400
+
+def test_add_menu_items_no_data(client, get_admin_token):
+    response = client.post('/api/v2/menu', headers=get_admin_token,
+                             data=json.dumps({}),
+                             content_type='application/json')
+    assert b'you did not enter data correctly' in response.data
+    assert response.status_code == 400
+
+
