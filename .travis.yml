@@ -16,6 +16,8 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
   - "psql -c 'create database test_fastfoodfast;' -U postgres"
+  - "psql -c 'create database fastfoodfast;' -U postgres"
+  - "psql -c 'create database dev_fastfoodfast;' -U postgres"
 
 script:
   - pytest
