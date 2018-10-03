@@ -34,7 +34,7 @@ class Menu:
                 "price":item[1]
             }
             menu_list.append(menu_dict)
-        
+
         return menu_list
 
     @staticmethod
@@ -50,7 +50,5 @@ class Menu:
         menu_keys = []
         for item in menu_list:
             menu_keys.append(item['menu_item'])
-        return menu_keys
-
-    
+        return menu_keys   
     

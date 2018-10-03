@@ -1,4 +1,3 @@
-import psycopg2
 from flask import request
 from flask_restful import Resource, Api
 from ....db.db import save_to_db
@@ -16,24 +15,24 @@ class PlaceOrder(Resource):
     def post():
         current_user = get_jwt_identity()
         ordered_by = current_user['user']
-        menu_list = Menu.get_menu_list()         
+        menu_list = Menu.get_menu_list()
         menu_keys = Menu.get_menu_keys()
         details = request.get_json()
         price = 0
 
         order_keys = []
         for key in details.keys():
-            order_keys.append(key)       
+            order_keys.append(key)
 
-        out_of_stock = set(order_keys) - set(menu_keys)           
-        
+        out_of_stock = set(order_keys) - set(menu_keys)
+
         try:
             if not out_of_stock:
                 order_details = ''
                 for item, quantity in details.items():
                     menu_item = get_dict_item(menu_list, 'menu_item', item)
-                    price += int(menu_item[0]['price']) * quantity                    
-                    order_details += "{} - {}, ".format(item, quantity) 
+                    price += int(menu_item[0]['price']) * quantity
+                    order_details += "{} - {}, ".format(item, quantity)
 
                 new_order = {
                     "ordered_by":ordered_by,
@@ -41,7 +40,7 @@ class PlaceOrder(Resource):
                     "price":price,
                     "status":"pending"
                 }
-                query = Orders.add_order_query(new_order) 
+                query = Orders.add_order_query(new_order)
 
                 save_to_db(query)
 
@@ -50,7 +49,7 @@ class PlaceOrder(Resource):
             return {"SyntaxError":"You did not enter data correctly"},400
         string = ''
         for i in out_of_stock:
-            string += "{}, ".format(i)        
+            string += "{}, ".format(i)
         return {"Error":"The following items are not on the menu. {}. Enter a menu_item as key, and an integer quantity as the value: '<menu_item>':'<quantity>'.".format(string)}, 404
  
 
