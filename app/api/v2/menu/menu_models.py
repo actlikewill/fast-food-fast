@@ -50,5 +50,4 @@ class Menu:
         menu_keys = []
         for item in menu_list:
             menu_keys.append(item['menu_item'])
-        return menu_keys   
-    
+        return menu_keys

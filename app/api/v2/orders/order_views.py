@@ -51,6 +51,12 @@ class PlaceOrder(Resource):
         for i in out_of_stock:
             string += "{}, ".format(i)
         return {"Error":"The following items are not on the menu. {}. Enter a menu_item as key, and an integer quantity as the value: '<menu_item>':'<quantity>'.".format(string)}, 404
- 
+
+    # @staticmethod
+    # @jwt_required
+    # def get()
+
+
 
 API_V2.add_resource(PlaceOrder, '/orders')
+
