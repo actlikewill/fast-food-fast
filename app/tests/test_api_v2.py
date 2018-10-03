@@ -76,10 +76,6 @@ def get_user_token(client):
     }
     return header
 
-def test_view_menu(client):
-    response = client.get('/api/v2/menu')
-    assert b'Sorry' in response.data
-    assert response.status_code == 200
 
 def test_create_admin(client):
     response = client.post('/auth/users', data=json.dumps(json_data[0]),
