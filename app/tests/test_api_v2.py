@@ -46,6 +46,18 @@ json_data = [
 	"menu_item": "'IceCream'",
 	"description": "'Flavor Full and creamy'",
 	"price": 200
+    },
+    {
+    "Burger":3,
+    "Hotdog":3
+    },
+    {
+    "Burger":"''",
+    "Hotdog":"''"
+    },
+    {
+    "Milk":3,
+    "Meat":3    
     }
     ]
 
@@ -170,11 +182,27 @@ def test_add_menu_items_no_data(client, get_admin_token):
     assert b'you did not enter data correctly' in response.data
     assert response.status_code == 400
 
-# def test_place_order(client, get_user_token):
-#     response = client.post('/api/v2/orders', headers=get_user_token,
-#                              data=json.dumps({}),
-#                              content_type='application/json')
-#     assert b'you did not enter data correctly' in response.data
-#     assert response.status_code == 400
+def test_place_order(client, get_user_token):
+    response = client.post('/api/v2/orders', headers=get_user_token,
+                             data=json.dumps(json_data[9]),
+                             content_type='application/json')
+    assert b'Success' in response.data
+    assert response.status_code == 201
+
+def test_place_order_syntax_error(client, get_user_token):
+    response = client.post('/api/v2/orders', headers=get_user_token,
+                             data=json.dumps(json_data[10]),
+                             content_type='application/json')
+    assert b'SyntaxError' in response.data
+    assert response.status_code == 400
+
+def test_place_order_error_out_of_stock(client, get_user_token):
+    response = client.post('/api/v2/orders', headers=get_user_token,
+                             data=json.dumps(json_data[11]),
+                             content_type='application/json')
+    assert b'following items are not on the menu' in response.data
+    assert response.status_code == 404
+
+
 
 

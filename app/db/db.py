@@ -25,3 +25,10 @@ def create_tables():
         cur.close()
         conn.commit()
         print("Closing database...")
+
+def save_to_db(query):
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute(query)
+    cur.close()
+    conn.commit()

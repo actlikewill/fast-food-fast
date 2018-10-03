@@ -1,4 +1,5 @@
 """This is the menu class"""
+from ....db.db import connect
 
 class Menu:
 
@@ -20,7 +21,21 @@ class Menu:
         query = """
                 SELECT menu_item, price FROM menu;
                 """
-        return query
+        conn = connect()
+        cur = conn.cursor()
+        cur.execute(query)
+        row = cur.fetchall()
+
+        menu_list = []
+
+        for item in row:
+            menu_dict = {
+                "menu_item":item[0],
+                "price":item[1]
+            }
+            menu_list.append(menu_dict)
+        
+        return menu_list
 
     @staticmethod
     def get_all_menu_query():
@@ -28,3 +43,14 @@ class Menu:
                 SELECT * FROM menu
                 """
         return query
+
+    @classmethod
+    def get_menu_keys(cls):
+        menu_list = cls.get_menu_list()
+        menu_keys = []
+        for item in menu_list:
+            menu_keys.append(item['menu_item'])
+        return menu_keys
+
+    
+    
