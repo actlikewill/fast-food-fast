@@ -48,12 +48,10 @@ json_data = [
 	"price": 200
     },
     {
-    "Burger":3,
-    "Hotdog":3
+    "IceCream":3    
     },
     {
-    "Burger":"''",
-    "Hotdog":"''"
+    "IceCream":"3"    
     },
     {
     "Milk":3,
