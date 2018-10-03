@@ -58,6 +58,15 @@ json_data = [
     {
     "Milk":3,
     "Meat":3
+    },
+    {
+    "status":"accepted"
+    },
+    {
+    "error":"accepted"
+    },
+    {
+    "status":"'"
     }
     ]
 
@@ -215,7 +224,40 @@ def test_get_all_orders_no_admin(client, get_user_token):
     assert b'Only admin allowed' in response.data
     assert response.status_code == 403
 
+def test_get_one_order(client, get_admin_token):
+    response = client.get('/api/v2/orders/1', headers=get_admin_token)
+    assert b'Your Order' in response.data
+    assert response.status_code == 200
 
+def test_get_one_order_no_admin(client, get_user_token):
+    response = client.get('/api/v2/orders/1', headers=get_user_token)
+    assert b'Only admin allowed access' in response.data
+    assert response.status_code == 403
 
+def test_update_orders(client, get_admin_token):
+    response = client.put('/api/v2/orders/1', headers=get_admin_token,
+                             data=json.dumps(json_data[12]),
+                             content_type='application/json')
+    assert b'Order Updated' in response.data
+    assert response.status_code == 201
 
+def test_update_orders_no_admin(client, get_user_token):
+    response = client.put('/api/v2/orders/1', headers=get_user_token,
+                             data=json.dumps(json_data[12]),
+                             content_type='application/json')
+    assert b'Only admin allowed access' in response.data
+    assert response.status_code == 403
 
+def test_update_orders_error(client, get_admin_token):
+    response = client.put('/api/v2/orders/1', headers=get_admin_token,
+                             data=json.dumps(json_data[13]),
+                             content_type='application/json')
+    assert b'you did not enter data correctly' in response.data
+    assert response.status_code == 400
+
+def test_update_syntax_error(client, get_admin_token):
+    response = client.put('/api/v2/orders/1', headers=get_admin_token,
+                             data=json.dumps(json_data[14]),
+                             content_type='application/json')
+    assert b'Syntax Error' in response.data
+    assert response.status_code == 400

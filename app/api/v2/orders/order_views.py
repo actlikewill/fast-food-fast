@@ -1,6 +1,7 @@
+import psycopg2
 from flask import request
 from flask_restful import Resource, Api
-from ....db.db import save_to_db, fetch_all_from_db
+from ....db.db import save_to_db, fetch_all_from_db, fetch_one_from_db
 from .. import API_V2
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from .order_models import Orders
@@ -59,13 +60,42 @@ class PlaceOrder(Resource):
         if current_user['role'] != 'admin':
             return {"Sorry": "Only admin allowed access to this route."}, 403
         query = Orders.get_all_orders()
-        rows = fetch_all_from_db(query)
+        orders = fetch_all_from_db(query)
 
-        return {"Orders": rows}, 200
-        
+        return {"Orders": orders}, 200
+
+class GetSingleOrder(Resource):
+    @staticmethod
+    @jwt_required
+    def get(order_id):
+        current_user = get_jwt_identity()
+        if current_user['role'] != 'admin':
+            return {"Sorry": "Only admin allowed access to this route."}, 403
+        query = Orders.get_single_order(order_id)
+        order = fetch_one_from_db(query)
+
+        return {"Your Order": order}, 200
+
+    @staticmethod
+    @jwt_required
+    def put(order_id):
+        current_user = get_jwt_identity()
+        if current_user['role'] != 'admin':
+            return {"Sorry": "Only admin allowed access to this route."}, 403
+
+        try:
+            data = request.get_json()
+            status = data['status']
+            query = Orders.update_order_status(status, order_id)
+            save_to_db(query)
+            success_message = " Order Updated"
+            return {"Success": success_message}, 201
+        except(KeyError, TypeError):
+            return {"Error": "you did not enter data correctly. Required key is 'status'"}, 400
+        except(psycopg2.ProgrammingError):
+            return {"Syntax Error": "You have a syntax error"}, 400
 
 
-
-
-API_V2.add_resource(PlaceOrder, '/orders')
+API_V2.add_resource(PlaceOrder, '/orders', endpoint='orders')
+API_V2.add_resource(GetSingleOrder, '/orders/<order_id>', endpoint='order')
 

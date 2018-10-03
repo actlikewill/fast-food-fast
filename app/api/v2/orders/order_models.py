@@ -13,12 +13,12 @@ class Orders:
 
         return query
 
-    # @staticmethod
-    # def get_single_order(order_id):
-    #     query = """
-    #             SELECT * FROM orders WHERE id = '{}';
-    #             """.format(order_id)
-    #     return query
+    @staticmethod
+    def get_single_order(order_id):
+        query = """
+                SELECT * FROM orders WHERE id = '{}';
+                """.format(order_id)
+        return query
 
     @staticmethod
     def get_all_orders():
@@ -27,12 +27,12 @@ class Orders:
                 """
         return query
 
-    # @staticmethod
-    # def update_order_status(status, order_id):
-    #     query = """
-    #             UPDATE orders SET status = {} WHERE id = '{}';
-    #             """.format(status, order_id)
-    #     return query
+    @staticmethod
+    def update_order_status(status, order_id):
+        query = """
+                UPDATE orders SET status = '{}' WHERE id = '{}';
+                """.format(status, order_id)
+        return query
 
     # @staticmethod
     # def get_user_orders(ordered_by):
