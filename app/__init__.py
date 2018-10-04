@@ -23,5 +23,7 @@ def create_app(config_name):
     app.register_blueprint(auth, url_prefix='/auth')
     from app.api.v2 import API_V2 as api_v2_blueprint
     app.register_blueprint(api_v2_blueprint, url_prefix='/api/v2')
+    from app.api.docs import HOME as homepage
+    app.register_blueprint(homepage)
 
     return app
