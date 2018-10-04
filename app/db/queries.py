@@ -2,6 +2,7 @@ q1 = """
     CREATE TABLE IF NOT EXISTS orders(
     id SERIAL PRIMARY KEY,
     ordered_by VARCHAR(1000) NOT NULL,
+    date_ordered VARCHAR(1000) NOT NULL,
     details VARCHAR(1000) NOT NULL,
     price VARCHAR(255) NOT NULL,
     status VARCHAR(255)
@@ -11,8 +12,8 @@ q1 = """
 q2 = """
     CREATE TABLE IF NOT EXISTS users(
     id SERIAL PRIMARY KEY,
-    username VARCHAR(1000) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    username VARCHAR(1000) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(255)
 );

@@ -11,7 +11,7 @@ from flask_jwt_extended import (
 )
 from flask_restful import Resource, Api
 from .user_models import Users
-from ...db.db import connect
+from ...db.db import connect, fetch_all_from_db, fetch_one_from_db, save_to_db
 from flask import request, make_response
 
 AUTH = Api(AUTH)
@@ -27,7 +27,7 @@ class LoginUser(Resource):
         data = request.get_json()
 
         if not data or not data['username'] or not data['password']:
-            return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
+            return {"Sorry":"Please enter a username and password"}, 401
 
         query = Users.get_user_query(data['username'])
 
@@ -37,7 +37,7 @@ class LoginUser(Resource):
         row = cur.fetchone()
 
         if not row:
-            return make_response('Could not verify', 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
+            return {"Sorry":"User not found"}, 404
 
         dbusername = row[0]
         dbpassword = row[1]
@@ -56,7 +56,7 @@ class GetUser(Resource):
     @staticmethod
     @jwt_required
     def get():
-        """Gets all user. Only available to admin"""
+        """Gets all users. Only available to admin"""
 
         current_user = get_jwt_identity()
         role = current_user['role']
@@ -64,12 +64,19 @@ class GetUser(Resource):
             return {"Sorry": "Route restricted to admin only"}, 403
 
         query = Users.get_all_users_query()
-        conn = connect()
-        cur = conn.cursor()
-        cur.execute(query)
-        rows = cur.fetchall()
+        rows = fetch_all_from_db(query)       
 
-        return {"Users" : rows}
+        users = []
+
+        for item in rows:
+            user = {
+                "user_id":item[0],
+                "user_name":item[1],
+                "user_email":item[2]                
+            }
+            users.append(user)
+
+        return {"Users" : users}
 
     @staticmethod
     def post():
@@ -77,20 +84,20 @@ class GetUser(Resource):
         This handles the creation of new users
         """
         try:
-            data = request.get_json()
-            query = Users.insert_user_query(data)
+            data = request.get_json()            
             user = data['username']
-            conn = connect()
-            cur = conn.cursor()
-            cur.execute(query)
-            cur.close()
-            conn.commit()
+
+            query = Users.insert_user_query(data)
+            save_to_db(query)
+            
             success_message = """ User {} Created""".format(user)
             return  {"Success": success_message}, 201
         except KeyError:
             return {"Error":"You did not enter data correctly"}, 400
         except psycopg2.ProgrammingError:
             return {"Syntax Error":"You did not format data correctly. "}, 400
+        except psycopg2.IntegrityError:
+            return {"Error":"A username with those credentials already exists"}, 401
 
 
 class GetSingleUser(Resource):
@@ -103,13 +110,21 @@ class GetSingleUser(Resource):
         role = current_user['role']
         if role != 'admin':
             return {"Sorry": "Route restricted to admin only"}, 403
-        query = Users.get_user_query_id(user_id)
-        conn = connect()
-        cur = conn.cursor()
-        cur.execute(query)
-        user = cur.fetchone()
+        try:
+            query = Users.get_user_query_id(user_id)
+            row = fetch_one_from_db(query)    
+            if not row:
+                return {"Sorry": "User not found"}, 404
 
-        return {"User": user}
+            user = {
+                "user_id":row[0],
+                "user_name":row[1],
+                "email":row[2]
+            }       
+
+            return {"User": user}
+        except:
+            return {"Error":"Integer required"}, 400
 
 
 AUTH.add_resource(LoginUser, '/login', endpoint='user')

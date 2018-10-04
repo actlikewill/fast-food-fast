@@ -3,13 +3,14 @@ class Orders:
     @staticmethod
     def add_order_query(values):
         ordered_by = values['ordered_by']
+        date_ordered = values['date_ordered']
         details = values['details']
         price = values['price']
         status = values['status']
         query = """
-                INSERT INTO orders (ordered_by, details, price, status)
-                VALUES ('{}', '{}', '{}', '{}');
-                """.format(ordered_by, details, price, status)
+                INSERT INTO orders (ordered_by, date_ordered, details, price, status)
+                VALUES ('{}', '{}', '{}', '{}', '{}');
+                """.format(ordered_by, date_ordered, details, price, status)
 
         return query
 
@@ -34,9 +35,9 @@ class Orders:
                 """.format(status, order_id)
         return query
 
-    # @staticmethod
-    # def get_user_orders(ordered_by):
-    #     query = """
-    #             SELECT * FROM orders WHERE ordered_by = '{}';
-    #             """.format(ordered_by)
-    #     return query
+    @staticmethod
+    def get_user_orders(ordered_by):
+        query = """
+                SELECT * FROM orders WHERE ordered_by = '{}';
+                """.format(ordered_by)
+        return query
