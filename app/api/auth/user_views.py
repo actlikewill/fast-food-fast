@@ -12,7 +12,7 @@ from flask_jwt_extended import (
 from flask_restful import Resource, Api
 from .user_models import Users
 from ...db.db import fetch_all_from_db, fetch_one_from_db, save_to_db
-from flask import request, make_response
+from flask import request
 
 AUTH = Api(AUTH)
 
