@@ -112,7 +112,7 @@ class GetSingleUser(Resource):
             return {"Sorry": "Route restricted to admin only"}, 403
         try:
             query = Users.get_user_query_id(user_id)
-            row = fetch_one_from_db(query)    
+            row = fetch_one_from_db(query)
             if not row:
                 return {"Sorry": "User not found"}, 404
 
