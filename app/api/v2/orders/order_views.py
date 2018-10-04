@@ -7,6 +7,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from .order_models import Orders
 from ..menu.menu_models import Menu
 from ...v1.helpers.helpers import get_dict_item
+from datetime import datetime
 
 API_V2 = Api(API_V2)
 
@@ -19,6 +20,8 @@ class PlaceOrder(Resource):
         menu_list = Menu.get_menu_list()
         menu_keys = Menu.get_menu_keys()
         details = request.get_json()
+        if not details:
+            return {"Error": "You did not enter anything"}, 400
         price = 0
 
         order_keys = []
@@ -37,6 +40,7 @@ class PlaceOrder(Resource):
 
                 new_order = {
                     "ordered_by":ordered_by,
+                    "date_ordered":datetime.now().strftime("%d/%m/%y %H:%M:%S"),
                     "details":order_details,
                     "price":price,
                     "status":"pending"
@@ -47,7 +51,7 @@ class PlaceOrder(Resource):
 
                 return {"Success":new_order}, 201
         except TypeError:
-            return {"SyntaxError":"You did not enter data correctly"},400
+           return {"SyntaxError":"You did not enter data correctly. The value needs to be an integer"},400
         string = ''
         for i in out_of_stock:
             string += "{}, ".format(i)
@@ -57,10 +61,11 @@ class PlaceOrder(Resource):
     @jwt_required
     def get():
         current_user = get_jwt_identity()
-        if current_user['role'] != 'admin':
-            return {"Sorry": "Only admin allowed access to this route."}, 403
-        query = Orders.get_all_orders()
+        ordered_by = current_user['user']
+        query = Orders.get_user_orders(ordered_by)
         orders = fetch_all_from_db(query)
+        if not orders:
+            return {"Sorry": "No orders exist"}, 200
 
         return {"Orders": orders}, 200
 
@@ -92,10 +97,39 @@ class GetSingleOrder(Resource):
             return {"Success": success_message}, 201
         except(KeyError, TypeError):
             return {"Error": "you did not enter data correctly. Required key is 'status'"}, 400
-        except(psycopg2.ProgrammingError):
+        except psycopg2.ProgrammingError:
             return {"Syntax Error": "You have a syntax error"}, 400
 
+class GetAllOrders(Resource):
+    @staticmethod
+    @jwt_required
+    def get():
+        current_user = get_jwt_identity()
+        if current_user['role'] != 'admin':
+            return {"Sorry": "Only admin allowed access to this route."}, 403
+        query = Orders.get_all_orders()
+        rows = fetch_all_from_db(query)
+        if not rows:
+            return {"Sorry": "No orders exist"}, 200
 
-API_V2.add_resource(PlaceOrder, '/orders', endpoint='orders')
+        orders = []
+
+        for item in rows:
+            order = {
+            "order_id":item[0],
+            "ordered_by":item[1],
+            "date_ordered":item[2],
+            "details":item[3],
+            "price":item[4],
+            "status":item[5]
+            }
+            orders.append(order)
+
+        return {"Orders": orders}, 200
+
+API_V2.add_resource(PlaceOrder, '/users/orders', endpoint='orders')
 API_V2.add_resource(GetSingleOrder, '/orders/<order_id>', endpoint='order')
+API_V2.add_resource(GetAllOrders, '/orders', endpoint='get_all_order')
+
+
 

@@ -109,6 +109,12 @@ def test_create_user(client):
                              content_type='application/json')
     assert b'Success' in response.data
 
+def test_create_duplicate_user(client):
+    response = client.post('/auth/users', data=json.dumps(json_data[5]),
+                             content_type='application/json')
+    assert b'already exists' in response.data
+    assert response.status_code == 401
+
 def test_login(client):
     response = client.post('/auth/login', data=json.dumps(json_data[1]),
                              content_type='application/json')
@@ -132,13 +138,13 @@ def test_get_single_user_no_admin(client, get_user_token):
 def test_login_error(client):
     response = client.post('/auth/login', data=json.dumps(json_data[2]),
                              content_type='application/json')
-    assert b'Could not verify' in response.data
-    assert response.status_code == 401
+    assert b'not found' in response.data
+    assert response.status_code == 404
 
 def test_login_no_password(client):
     response = client.post('/auth/login', data=json.dumps(json_data[3]),
                              content_type='application/json')
-    assert b'Invalid Password' in response.data
+    assert b'incorrect' in response.data
     assert response.status_code == 401
 
 def test_get_users_no_admin(client, get_user_token):
@@ -193,25 +199,38 @@ def test_add_menu_items_no_data(client, get_admin_token):
     assert response.status_code == 400
 
 def test_place_order(client, get_user_token):
-    response = client.post('/api/v2/orders', headers=get_user_token,
+    response = client.post('/api/v2/users/orders', headers=get_user_token,
                              data=json.dumps(json_data[9]),
                              content_type='application/json')
     assert b'Success' in response.data
     assert response.status_code == 201
 
+def test_place_order_no_data(client, get_user_token):
+    response = client.post('/api/v2/users/orders', headers=get_user_token,
+                             data=json.dumps({}),
+                             content_type='application/json')
+    assert b'not enter anything' in response.data
+    assert response.status_code == 400
+
 def test_place_order_syntax_error(client, get_user_token):
-    response = client.post('/api/v2/orders', headers=get_user_token,
+    response = client.post('/api/v2/users/orders', headers=get_user_token,
                              data=json.dumps(json_data[10]),
                              content_type='application/json')
     assert b'SyntaxError' in response.data
     assert response.status_code == 400
 
 def test_place_order_error_out_of_stock(client, get_user_token):
-    response = client.post('/api/v2/orders', headers=get_user_token,
+    response = client.post('/api/v2/users/orders', headers=get_user_token,
                              data=json.dumps(json_data[11]),
                              content_type='application/json')
     assert b'following items are not on the menu' in response.data
     assert response.status_code == 404
+
+def test_get_order_history(client, get_user_token):
+    response = client.get('/api/v2/users/orders', headers=get_user_token)
+    assert b'NewUser' in response.data
+    assert response.status_code == 200
+
 
 def test_get_all_orders(client, get_admin_token):
     response = client.get('/api/v2/orders', headers=get_admin_token)
@@ -260,3 +279,5 @@ def test_update_syntax_error(client, get_admin_token):
                              content_type='application/json')
     assert b'Syntax Error' in response.data
     assert response.status_code == 400
+
+
