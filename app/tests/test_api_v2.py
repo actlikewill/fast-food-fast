@@ -144,7 +144,7 @@ def test_login_error(client):
 def test_login_no_password(client):
     response = client.post('/auth/login', data=json.dumps(json_data[3]),
                              content_type='application/json')
-    assert b'Invalid Password' in response.data
+    assert b'incorrect' in response.data
     assert response.status_code == 401
 
 def test_get_users_no_admin(client, get_user_token):

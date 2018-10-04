@@ -1,7 +1,7 @@
 import psycopg2
 from flask import request
 from flask_restful import Resource, Api
-from ....db.db import connect
+from ....db.db import connect, save_to_db, fetch_all_from_db
 from .. import API_V2
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from .menu_models import Menu
@@ -12,13 +12,21 @@ class GetMenu(Resource):
     @staticmethod
     def get():
         query = Menu.get_all_menu_query()
-        conn = connect()
-        cur = conn.cursor()
-        cur.execute(query)
-        rows = cur.fetchall()
+        rows = fetch_all_from_db(query)        
         if not rows:
             return {"Sorry": "No Items in the menu yet."}, 200
-        return {"Menu": rows}, 200
+
+        menu = []
+
+        for item in rows:
+            menu_item = {
+                "menu_id":item[0],
+                "menu_item":item[1],
+                "description":item[2],
+                "price":item[3]
+            }
+            menu.append(menu_item)
+        return {"Menu": menu}, 200
 
     @staticmethod
     @jwt_required
@@ -29,13 +37,9 @@ class GetMenu(Resource):
             return {"Sorry": "Route restricted to admin only"}, 403
         try:
             data = request.get_json()
-            query = Menu.add_menu_query(data)
             item = data['menu_item']
-            conn = connect()
-            cur = conn.cursor()
-            cur.execute(query)
-            cur.close()
-            conn.commit()
+            query = Menu.add_menu_query(data)            
+            save_to_db(query)
             success_message = """ Menu Item {} Created""".format(item)
             return {"Success": success_message}, 201
         except(KeyError, TypeError):

@@ -24,30 +24,30 @@ class LoginUser(Resource):
         The login function generates the access token
         The payload consists of the username and the role
         """
-        data = request.get_json()
+        try:
+            data = request.get_json()
+    
+            if not data or not data['username'] or not data['password']:
+                return {"Error":"Please enter a username and password"}, 401
 
-        if not data or not data['username'] or not data['password']:
-            return {"Sorry":"Please enter a username and password"}, 401
+            query = Users.get_user_query(data['username'])
 
-        query = Users.get_user_query(data['username'])
+            row = fetch_one_from_db(query)           
 
-        conn = connect()
-        cur = conn.cursor()
-        cur.execute(query)
-        row = cur.fetchone()
+            if not row:
+                return {"Sorry":"User not found"}, 404
 
-        if not row:
-            return {"Sorry":"User not found"}, 404
+            dbusername = row[0]
+            dbpassword = row[1]
+            dbrole = row[2]
 
-        dbusername = row[0]
-        dbpassword = row[1]
-        dbrole = row[2]
-
-        if data['password'] != dbpassword:
-            return {"Error":"Invalid Password"}, 401
-        token = create_access_token(identity={"user":dbusername, "role":dbrole})
-
-        return {"token": token}, 200
+            if data['password'] != dbpassword:
+                return {"Error":"Your username and/or password are incorrect"}, 401
+            token = create_access_token(identity={"user":dbusername, "role":dbrole})
+            
+            return {"msg":"Login Successful", "token": token}, 200
+        except KeyError:
+            return {"Error": "You did not enter data correctly"}, 400
 
 class GetUser(Resource):
     """
