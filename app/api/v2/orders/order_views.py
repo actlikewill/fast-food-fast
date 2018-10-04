@@ -50,7 +50,7 @@ class PlaceOrder(Resource):
                 save_to_db(query)
 
                 return {"Success":new_order}, 201
-        except TypeError:          
+        except TypeError:
            return {"SyntaxError":"You did not enter data correctly. The value needs to be an integer"},400
         string = ''
         for i in out_of_stock:
@@ -97,7 +97,7 @@ class GetSingleOrder(Resource):
             return {"Success": success_message}, 201
         except(KeyError, TypeError):
             return {"Error": "you did not enter data correctly. Required key is 'status'"}, 400
-        except(psycopg2.ProgrammingError):
+        except psycopg2.ProgrammingError:
             return {"Syntax Error": "You have a syntax error"}, 400
 
 class GetAllOrders(Resource):
@@ -113,7 +113,7 @@ class GetAllOrders(Resource):
             return {"Sorry": "No orders exist"}, 200
 
         orders = []
-        
+
         for item in rows:
             order = {
             "order_id":item[0],
@@ -123,7 +123,7 @@ class GetAllOrders(Resource):
             "price":item[4],
             "status":item[5]
             }
-            orders.append(order)      
+            orders.append(order)
 
         return {"Orders": orders}, 200
 

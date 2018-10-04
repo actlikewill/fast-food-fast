@@ -230,7 +230,7 @@ def test_get_order_history(client, get_user_token):
     response = client.get('/api/v2/users/orders', headers=get_user_token)
     assert b'NewUser' in response.data
     assert response.status_code == 200
-    
+
 
 def test_get_all_orders(client, get_admin_token):
     response = client.get('/api/v2/orders', headers=get_admin_token)
