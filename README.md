@@ -3,22 +3,25 @@
 
 [![Build Status](https://travis-ci.com/actlikewill/fast-food-fast.svg?branch=api%2Fv1)](https://travis-ci.com/actlikewill/fast-food-fast) [![Maintainability](https://api.codeclimate.com/v1/badges/e2cd1d58017013479dbe/maintainability)](https://codeclimate.com/github/actlikewill/fast-food-fast/maintainability) [![Coverage Status](https://coveralls.io/repos/github/actlikewill/fast-food-fast/badge.svg?branch=api%2Fv1)](https://coveralls.io/github/actlikewill/fast-food-fast?branch=api%2Fv1) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5e56bbfcb29341d185ae034e743654da)](https://www.codacy.com/app/actlikewill/fast-food-fast?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=actlikewill/fast-food-fast&amp;utm_campaign=Badge_Grade)
 
-This is an api for a fast food ordering app. You can use it to place orders create new menu items. It uses data structures as storage.
+This is an Version two of the api for Fastfood Fast ordering app. You can use it to place orders create new menu items.
+This version implements a postgreql database for storage.
 
 <hr>
 
-Thisthe following endpoints for the api are available.
+The following endpoints for the api are available.
 
 
 | Endpoint  | Description |
 | ------------- | ------------- |
-| `GET /api/v1/orders` | To get a list of orders |
-| `GET /api/v1/orders/<orderId>`|To fetch a specific order using the order Id |
-| `POST /api/v1/orders` | To place an order  |
-| `PUT /api/v1/orders?status=<accepted> or <declined>`| To update the status of an order  |
-|`GET /api/menu`| To view to menu items |
-|`POST /api/menu` | To add new menu items |
-|`GET /api/menu/<menu_id>`| To view a single menu item details |
+|`POST /auth/users`| To create new users |
+|`GET /auth/users`| To get a list of all users|
+| `GET /api/v2/orders` | To get a list of orders |
+| `GET /api/v2/orders/<orderId>`|To fetch a specific order using the order Id |
+| `POST /api/v2/orders` | To place an order  |
+| `PUT /api/v2/orders/<order_id>`| To update the status of an order  |
+|`GET /api/v2/menu`| To view to menu items |
+|`POST /api/v2/menu` | To add new menu items |
+|`GET /api/v2/menu/<menu_id>`| To view a single menu item details |
 |`PUT /api/menu/<menu_id>`| To edit a single menu item using the id|
 
 ## Getting Started
@@ -29,7 +32,7 @@ Create a folder and clone the repository using the following command:
      
 Switch to the api branch using:
 
-     git checkout api/v1
+     git checkout ft-api-v2-160814187
      
 ### Prerequisites
 
@@ -62,36 +65,51 @@ To launch the api use the command:
 
 The api will run at your localhost on port:5000
 
-    http://localhost:5000/api/v1
+    http://localhost:5000/api/v2
+    
+    http://localhost:5000/auth/users
 
 
-An example request to place view the menu  using curl commands would be:
+An example request to login a user  using curl commands would be:
 
-`curl --request GET \
- --url http://localhost:5000/api/v1/menu`
-  
+     curl --request POST \
+       --url http://localhost:5000/auth/login \
+       --header ': ' \
+       --header 'Content-Type: application/json' \
+       --data '{
+          "username":"Admin",
+          "password":"adminpassword"
+     }'
+
 To add a food item you can use:
 
-`curl --request POST \
-  --url http://localhost:5000/api/v1/menu \
-  --header 'Content-Type: application/json' \
-  --data '{"menu_item":"Burger", "price": 400}'`
-
+     curl --request POST \
+       --url http://localhost:5000/api/v2/menu \
+       --header 'Authorization: Bearer <your-token-here> \
+       --header 'Content-Type: application/json' \
+       --data '{
+          "menu_item": "Hotdog",
+          "description": "Spicy pork hotdog slathered in mustard",
+          "price": 300
+     }'
+     
 To place an order you can use:
 
-`curl --request POST \
---url http://localhost:5000/api/v1/orders \
---header 'Content-Type: application/json' \
---data '{"Burger":3}'`
+     curl --request POST \
+       --url http://localhost:5000/api/v2/orders \
+       --header 'Authorization: Bearer <your-token-here> \
+       --header 'Content-Type: application/json' \
+       --data '
+     {"Sandwich":2, "Burger": 3, "Hotdog":5}
 
 
 The full documentation on how to you form your requests can be found at this link published using Postman.
 
-[Fast Food Fast -Api Documentation](https://documenter.getpostman.com/view/5281813/RWaRM5Ph)
+[Fast Food Fast -Api Documentation](https://documenter.getpostman.com/view/5281813/RWgm525d)
 
  The api is also hosted on Heroku at:
  
- [https://actlikewill-fastfoodfast.herokuapp.com/api/v1/orders](https://actlikewill-fastfoodfast.herokuapp.com/api/v1/orders)
+ [https://actlikewill-fastfoodfast.herokuapp.com/auth/users](https://actlikewill-fastfoodfast.herokuapp.com/auth/users)
  
  ## Running the tests
  
@@ -105,7 +123,7 @@ The full documentation on how to you form your requests can be found at this lin
 
 The easiest way to deploy this on a live server is to use a platform such as heroku and use the command:
 
-     git push heroku api/v1:master
+     git push heroku:master
      
  You need to create and account and a new application on their platform. The app contains scripts the can run the installation automatically.
  
