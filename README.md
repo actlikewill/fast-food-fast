@@ -103,13 +103,13 @@ To place an order you can use:
      {"Sandwich":2, "Burger": 3, "Hotdog":5}
 
 
-The full documentation on how to you form your requests can be found at this link published using Postman.
+The full documentation on how to you form your requests can be found at this link published using Apiary.
 
-[Fast Food Fast -Api Documentation](https://documenter.getpostman.com/view/5281813/RWgm525d)
+[Fast Food Fast -Api Documentation](https://fastfoodfast18.docs.apiary.io)
 
  The api is also hosted on Heroku at:
  
- [https://actlikewill-fastfoodfast.herokuapp.com/auth/users](https://actlikewill-fastfoodfast.herokuapp.com/auth/users)
+ [https://actlikewill-fastfoodfast.herokuapp.com](https://actlikewill-fastfoodfast.herokuapp.com)
  
  ## Running the tests
  
