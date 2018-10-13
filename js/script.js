@@ -23,7 +23,7 @@ function getCookie(cname) {
 
 window.onload = function getMenu() {       
 
-    const url = `http://localhost:5000/api/v2/menu`
+    const url = `https://actlikewill-fastfoodfast.herokuapp.com/api/v2/menu`
 
     document.getElementById("username").innerHTML = getCookie("user");
 
@@ -153,7 +153,7 @@ let confirmButton = document.getElementById("confirm-order");
 
 confirmOrderButton.onclick = function () {
     
-    const url = `http://localhost:5000/api/v2/users/orders`
+    const url = `https://actlikewill-fastfoodfast.herokuapp.com/api/v2/users/orders`
     fetch(url, {
         method: "POST",
         headers: {

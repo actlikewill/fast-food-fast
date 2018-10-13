@@ -33,7 +33,7 @@ loginForm.addEventListener('submit', (e) => {
 
     console.log(JSON.stringify(loginData));
 
-    const url = `http://localhost:5000/auth/login`;
+    const url = `https://actlikewill-fastfoodfast.herokuapp.com/auth/login`;
 
     fetch(url, {
         method: "POST",
@@ -63,9 +63,10 @@ loginForm.addEventListener('submit', (e) => {
         document.cookie=`user=${user};path=/`;
         document.cookie=`role=${role};path=/`;
         if (role == "user") {
-        setTimeout(() => {window.location.replace("/fastfoodfast/index.html")}, 2000) 
+        let domain = window.location.hostname;
+        setTimeout(() => {window.location.replace(`${domain}/fast-food-fast/index.html`)}, 2000) 
         } else {
-        setTimeout(() => {window.location.replace("/fastfoodfast/admin.html")}, 2000)
+        setTimeout(() => {window.location.replace(`${domain}fast-food-fast/admin.html`)}, 2000)
         } 
     }     
     })
@@ -109,7 +110,7 @@ signUpForm.addEventListener("submit", (e) => {
         signUpEmptyMessage.style.display = "none";
         signUpFailMessage.style.display = "none";
 
-        const url = `http://localhost:5000/auth/users`;
+        const url = `https://actlikewill-fastfoodfast.herokuapp.com/auth/users`;
 
         fetch(url, {
             method: "POST",

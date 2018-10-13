@@ -19,7 +19,7 @@ let historyErrorMessage = document.getElementById("history-error")
 window.onload = function getUserHistory() {
     document.getElementById("user").innerHTML = getCookie("user");
 
-    const url =`http://localhost:5000/api/v2/users/orders`
+    const url =`https://actlikewill-fastfoodfast.herokuapp.com/api/v2/users/orders`
 
     fetch(url, {
         method: "GET",

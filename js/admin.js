@@ -16,7 +16,7 @@ function getCookie(cname) {
 
 function updateStatusComplete(orderNumber) {
     
-    const url =`http://localhost:5000/api/v2/orders/${orderNumber}`;
+    const url =`https://actlikewill-fastfoodfast.herokuapp.com/api/v2/orders/${orderNumber}`;
     let status = {status: "Complete"};
     fetch(url, {
         method:"PUT",
@@ -39,7 +39,7 @@ function updateStatusComplete(orderNumber) {
 
 function updateStatusDecline(orderNumber) {
     
-    const url =`http://localhost:5000/api/v2/orders/${orderNumber}`;
+    const url =`https://actlikewill-fastfoodfast.herokuapp.com/api/v2/orders/${orderNumber}`;
     let status = {status: "Declined"};
     fetch(url, {
         method:"PUT",
@@ -62,7 +62,7 @@ function updateStatusDecline(orderNumber) {
 
 function undoStatus(orderNumber) {
     
-    const url =`http://localhost:5000/api/v2/orders/${orderNumber}`;
+    const url =`https://actlikewill-fastfoodfast.herokuapp.com/api/v2/orders/${orderNumber}`;
     let status = {status: "pending"};
     fetch(url, {
         method:"PUT",
@@ -87,7 +87,7 @@ let adminErrorMessage = document.getElementById("admin-error");
 
 window.onload = function getOrders() {
     document.getElementById("admin").innerHTML = getCookie("user");
-    const url =`http://localhost:5000/api/v2/orders`
+    const url =`https://actlikewill-fastfoodfast.herokuapp.com/api/v2/orders`
 
     this.fetch(url, {
         method: "GET",

@@ -35,7 +35,7 @@ addItemForm.addEventListener("submit", (e) => {
         price:price
     }
 
-    const url = `http://localhost:5000/api/v2/menu`;
+    const url = `https://actlikewill-fastfoodfast.herokuapp.com/api/v2/menu`;
 
     fetch(url, {
         method: "POST",
