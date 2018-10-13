@@ -45,7 +45,7 @@ class LoginUser(Resource):
                 return {"Error":"Your username and/or password are incorrect"}, 401
             token = create_access_token(identity={"user":dbusername, "role":dbrole})
 
-            return {"msg":"Login Successful", "token": token}, 200
+            return {"msg":"Login Successful","role": dbrole, "user": dbusername, "token": token}, 200
         except KeyError:
             return {"Error": "You did not enter data correctly"}, 400
 

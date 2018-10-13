@@ -63,10 +63,20 @@ class PlaceOrder(Resource):
         current_user = get_jwt_identity()
         ordered_by = current_user['user']
         query = Orders.get_user_orders(ordered_by)
-        orders = fetch_all_from_db(query)
-        if not orders:
+        rows = fetch_all_from_db(query)
+        if not rows:
             return {"Sorry": "No orders exist"}, 200
 
+        orders = []
+
+        for item in rows:
+            order = {
+                "date":item[2],
+                "details":item[3],
+                "cost":item[4],
+                "status":item[5]
+            }
+            orders.append(order)
         return {"Orders": orders}, 200
 
 class GetSingleOrder(Resource):

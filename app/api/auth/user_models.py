@@ -11,7 +11,7 @@ class Users:
         username = values['username']
         email = values['email']
         password = values['password']
-        role = values['role']
+        role = "user"
         query = """
                 INSERT INTO users (username, email, password, role)
                 VALUES ('{}', '{}', '{}', '{}');
