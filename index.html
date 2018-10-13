@@ -20,9 +20,9 @@
             </div>
             <div class="nav-list">                
                 <ul>
-                    <li><a href="user-login.html">Login</a></li>
+                    <li><a href="user-login.html">Logout</a></li>
                     <li><a href="index.html">Place Order</a></li>
-                    <li><a href="admin.html">Admin</a></li>
+                    <li id="admin-link"><a href="admin.html">Admin</a></li>
                     <li><a href="user-history.html">User History</a></li>
                     
                 </ul>
@@ -33,81 +33,17 @@
     <div class="viewport">
         <div class="main">
             <div class="heading">
+                <h4 class="welcome">Hi <span id="username"></span>.</h4>
                 <h3>Click on an item to add to your order</h3>
             </div>
             <div class="row">
-                <div class="menu">
-                    <div id="fries" class="menu-item" onclick="addItem(this.id)">
-                        <div class="menu-img">
-                            <img src="img/fries.svg" alt="">
-                        </div>
-                        <div  class="menu-text">
-                            <h4>French Fries</h4>
-                        </div>
-                        <div  class="menu-price">
-                            <h4>Ksh 250</h4>
-                        </div>
-                    </div>
-                    <div id="pizza" class="menu-item" id="chicken" onclick="addItem(this.id)">
-                        <div class="menu-img">
-                            <img src="img/pizza.svg" alt="">
-                        </div>
-                        <div class="menu-text">
-                            <h4>Pizza</h4>
-                        </div>
-                        <div class="menu-price">
-                            <h4>Ksh 150</h4>
-                        </div>
-                    </div>
-                    <div id="hotdog" class="menu-item" onclick="addItem(this.id)">
-                        <div class="menu-img">
-                            <img id="hotdog" src="img/hotdog.svg" alt="">
-                        </div>
-                        <div class="menu-text">
-                            <h4>Hotdog</h4>
-                        </div>
-                        <div class="menu-price">
-                            <h4>Ksh 180</h4>
-                        </div>
-                    </div>
-                    <div id="coffee" class="menu-item" onclick="addItem(this.id)">
-                        <div class="menu-img">
-                            <img src="img/soda.svg" alt="">
-                        </div>
-                        <div class="menu-text">
-                            <h4>Soda</h4>
-                        </div>
-                        <div class="menu-price">
-                            <h4>Ksh 100</h4>
-                        </div>
-                    </div>
-                    <div id="burger" class="menu-item" onclick="addItem(this.id)">
-                        <div class="menu-img">
-                            <img src="img/burger.svg" alt="">
-                        </div>
-                        <div class="menu-text">
-                            <h4>Burger</h4>
-                        </div>
-                        <div class="menu-price">
-                            <h4>Ksh 300</h4>
-                        </div>
-                    </div>
-                    <div id="ice-cream" class="menu-item" onclick="addItem(this.id)">
-                        <div class="menu-img">
-                            <img src="img/ice-cream.svg" alt="">
-                        </div>
-                        <div class="menu-text">
-                            <h4>Ice Cream</h4>
-                        </div>
-                        <div class="menu-price">
-                            <h4>Ksh 300</h4>
-                        </div>
-                    </div>
-                    
+                <div id="MyMenu" class="menu">
+                    <!-- Menu items appear here -->
                 </div>
                 <div class="order">
                     <div class="order-heading">
                         <h4>Your Order</h4>
+                        <small id="clear">Clear Order</small>
                     </div>
                     <div id="order-list">
                         
@@ -116,19 +52,37 @@
                         
                     </div>
 
-                    <div class="place-order-button">                
+                    <div id="place-order-button" class="place-order-button" onclick="getOrder()">                
                         <button type="submit" class="button">Place Order</button>
-                    </div>
-                    
-                
-                    
-                    
-                </div>
+                    </div>                
+                </div>                
             </div>
+            <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Order Summary</h2><br>
+
+                        <div id="order-summary">
+
+                        </div>
+
+                        <div id="confirm-order">
+                            <button class="complete order-button">Confirm Order</button>
+                        </div>
+                        <div id="success-message">
+                            <p>You Order Was Placed Successfully</p>
+                            <button id="back" onclick="reloadPage()" class="back order-button">Go Back</button>
+                        </div>
+                        <div id="fail-message">
+                            <p>There was a problem. Please Login to place your order.</p>
+                            <button id="back2" onclick="reloadPage()" class="back order-button">Go Back</button>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>  
     <footer class="footer">
-        <p><small>Copyright Fastfood Fast 2018</small></p>
+        <p><small>&copy; 2018 Fastfood Fast, Inc.</small></p>
     </footer>
 
 <script src="js/script.js"></script>

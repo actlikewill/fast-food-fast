@@ -20,7 +20,7 @@
                 </div>
                 <div class="nav-list">                
                     <ul>
-                        <li><a href="user-login.html">Login</a></li>
+                        <li><a href="user-login.html">Logout</a></li>
                         <li><a href="index.html">Place Order</a></li>
                         <li><a href="admin.html">Admin</a></li>
                         <li><a href="user-history.html">User History</a></li>
@@ -33,19 +33,30 @@
         <div class="main">
 
             <div class="heading">
-                <h4>Welcome Admin</h4>
+                <h4>Welcome <span id="admin-name"></span>.</h4>
             </div>
             <div class="container">
-                    <form id="loginForm" class="add-form" action="orders.html">  
+
+                        <div id="add-success">
+                            <p>Menu Item Successfully Added.</p>
+                        </div>
+
+                        <div id="add-fail">
+                            <p>An Error occured. Please Try Again.</p>
+                        </div>
+                    <form id="add-item-form" class="add-form" action="orders.html">  
                                     
                         <label class="form-label" for=""><strong>Add Item Name:</strong></label><br>
-                        <small>Keep it short and descriptive:</small>
-                        <input class="form-input" type="text"><br>
+                        <small>Keep it Short:</small>
+                        <input class="form-input" type="text" name="menu_item"><br>
+                        <label class="form-label" for=""><strong>Add Item Description:</strong></label><br>
+                        <small>Make it interesting and brief:</small>
+                        <input class="form-input" type="text" name="description"><br>
                         <label class="form-label" for=""><strong>Add Item Price:</strong></label><br>
-                        <small>The price is in Ksh</small>
-                        <input class="form-input" type="text"><br>
+                        <small>The price is in Ksh:</small>
+                        <input class="form-input" type="text" name="price"><br>
                         <label class="form-label" for=""><strong>Add Item Image:</strong></label><br>
-                        <small>Add an image to be displayed in the menu</small>
+                        <small>Add an image to be displayed in the menu:</small>
                         <input class="form-input" type="file"><br>
                         <input class="form-submit" type="submit">
                     </form>
@@ -53,9 +64,9 @@
         </div>
     </div>
     <footer class="footer">
-        <p><small>Copyright Fastfood Fast 2018</small></p>
+        <p><small>&copy; 2018 Fastfood Fast, Inc.</small></p>
     </footer>
-<script src="js/script.js"></script>
+<script src="js/admin-add.js"></script>
     
 </body>
 </html>
