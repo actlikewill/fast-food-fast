@@ -90,7 +90,7 @@ def get_admin_token(client):
 def get_user_token(client):
     response = client.post('/auth/login', data=json.dumps(json_data[4]),
                              content_type='application/json')
-    token = json.loads(response.data)['token']    
+    token = json.loads(response.data)['token']
     header = {
         'Authorization':'Bearer {0}'.format(token)
     }
