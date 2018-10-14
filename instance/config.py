@@ -1,6 +1,7 @@
 """
 Contains configurations for the applications
 """
+import os
 
 class Config(object):
     """The base configurations class"""
@@ -18,7 +19,7 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     """Production configurations"""
-    DATABASE_URL = "dbname=fastfoodfast host=127.0.0.1 port=5432 user=postgres password=wilson"
+    DATABASE_URL = os.environ['DATABASE_URL']
     DEBUG = False
 
 class TestingConfig(Config):
@@ -27,6 +28,6 @@ class TestingConfig(Config):
 CONFIG = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
-    'default': DevelopmentConfig,
+    'default': ProductionConfig,
     'testing': TestingConfig
 }
