@@ -14,7 +14,7 @@ class Config(object):
 class DevelopmentConfig(Config):
     """Development configurations"""
     DATABASE_URL = "dbname=dev_fastfoodfast host=127.0.0.1 port=5432 user=postgres password=wilson"
-    DEBUG = True
+    DEBUG = False
 
 class ProductionConfig(Config):
     """Production configurations"""
