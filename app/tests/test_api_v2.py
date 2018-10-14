@@ -113,6 +113,12 @@ def test_create_duplicate_user(client):
     assert b'already exists' in response.data
     assert response.status_code == 401
 
+def test_create_empty_user(client):
+    response = client.post('auth/users', data=json.dumps({"username":"", "password": ""}),
+                            content_type='application/json')
+    assert b'did not enter data correctly' in response.data
+    assert response.status_code == 400
+
 def test_login(client):
     response = client.post('/auth/login', data=json.dumps(json_data[1]),
                              content_type='application/json')
@@ -277,5 +283,13 @@ def test_update_syntax_error(client, get_admin_token):
                              content_type='application/json')
     assert b'Syntax Error' in response.data
     assert response.status_code == 400
+
+def test_errorhandler_404(client, get_admin_token):
+    response = client.get('/api/v2/sorry', headers=get_admin_token,
+                             data=json.dumps(json_data[14]),
+                             content_type='application/json')
+    assert b'does not exist' in response.data
+    assert response.status_code == 404
+
 
 

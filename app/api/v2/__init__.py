@@ -10,7 +10,7 @@ from .orders import order_views
 
 @API_V2.app_errorhandler(404)
 def not_found(err):
-    return jsonify({"Error": "That route does not exist"})
+    return jsonify({"Error": "That route does not exist"}), 404
 
 @API_V2.app_errorhandler(500)
 def server_error(err):
