@@ -27,5 +27,12 @@ q3 = """
 );
 """
 
-queries = [q1, q2, q3]
+create_admin = """
+
+    INSERT INTO users(username, email, password, role)
+    VALUES ('admin', 'admin@email.com', 'adminpassword', 'admin');                
+            
+"""
+
+queries = [q1, q2, q3, create_admin]
 

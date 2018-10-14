@@ -11,7 +11,7 @@ json_data = [
 	"role":"admin"
     },
     {
-	"username":"NewAdmin",
+	"username":"admin",
     "password":"adminpassword"
     },
     {
@@ -80,8 +80,7 @@ def client(request):
 def get_admin_token(client):
     response = client.post('/auth/login', data=json.dumps(json_data[1]),
                              content_type='application/json')
-    token = json.loads(response.data)['token']
-    print(token)
+    token = json.loads(response.data)['token']    
     header = {
         'Authorization':'Bearer {0}'.format(token)
     }
@@ -91,8 +90,7 @@ def get_admin_token(client):
 def get_user_token(client):
     response = client.post('/auth/login', data=json.dumps(json_data[4]),
                              content_type='application/json')
-    token = json.loads(response.data)['token']
-    print(token)
+    token = json.loads(response.data)['token']    
     header = {
         'Authorization':'Bearer {0}'.format(token)
     }
@@ -228,7 +226,7 @@ def test_place_order_error_out_of_stock(client, get_user_token):
 
 def test_get_order_history(client, get_user_token):
     response = client.get('/api/v2/users/orders', headers=get_user_token)
-    assert b'NewUser' in response.data
+    assert b'Orders' in response.data
     assert response.status_code == 200
 
 
