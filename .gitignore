@@ -1,6 +1,2 @@
-venv
-.vscode
-__pycache__/
-.pytest_cache/
-*.py[cod]
-.coverage
+node_modules/
+coverage/
