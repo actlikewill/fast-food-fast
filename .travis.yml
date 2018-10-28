@@ -3,6 +3,7 @@ node_js:
   - "8.11"
 install:
   - npm install
+  - npm install coveralls --save-dev
 script:
   - npm test
 addons:
@@ -12,3 +13,6 @@ before_install:
 before_script:
     - "sudo chown root /opt/google/chrome/chrome-sandbox"
     - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
+after_success:
+ - istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+ - coveralls
