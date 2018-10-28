@@ -13,17 +13,17 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-jasmine-matchers',
       'karma-chrome-launcher',
-      'karma-coverage'
+      'karma-coverage',
+      'karma-coveralls'
     ],
-    reporters: ['dots', 'coverage'],
+    reporters: ['dots', 'coverage', 'coveralls'],
     colors: true,
     browsers: ['ChromeHeadless'],
     singleRun: true,
     coverageReporter: {
       dir: 'coverage/',
-      reporters: [
-        {type: 'html', subdir: 'html'}
-      ]
+      type: 'lcov'
+      
     }
   })
 };
