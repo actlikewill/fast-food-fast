@@ -19,7 +19,7 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     """Production configurations"""
-    DATABASE_URL = os.environ['DATABASE_URL']
+    # DATABASE_URL = os.environ['DATABASE_URL']
     DEBUG = False
 
 class TestingConfig(Config):
@@ -28,6 +28,6 @@ class TestingConfig(Config):
 CONFIG = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
-    'default': ProductionConfig,
+    'default': DevelopmentConfig,
     'testing': TestingConfig
 }

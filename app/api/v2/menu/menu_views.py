@@ -23,7 +23,8 @@ class GetMenu(Resource):
                 "menu_id":item[0],
                 "menu_item":item[1],
                 "description":item[2],
-                "price":item[3]
+                "price":item[3],
+                "image_url":item[4]
             }
             menu.append(menu_item)
         return {"Menu": menu}, 200

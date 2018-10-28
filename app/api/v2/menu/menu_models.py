@@ -8,10 +8,11 @@ class Menu:
         menu_item = values['menu_item']
         description = values['description']
         price = values['price']
+        image_url = values['image_url']
         query = """
-                INSERT INTO menu (menu_item, description, price)
-                VALUES ('{}', '{}', '{}');
-                """.format(menu_item, description, price)
+                INSERT INTO menu (menu_item, description, price, image_url)
+                VALUES ('{}', '{}', '{}', '{}');
+                """.format(menu_item, description, price, image_url)
         return query
 
 

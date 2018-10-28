@@ -23,7 +23,8 @@ q3 = """
     id SERIAL PRIMARY KEY,
     menu_item VARCHAR(1000) NOT NULL,
     description VARCHAR(255) NOT NULL,
-    price VARCHAR(255)            
+    price VARCHAR(255),
+    image_url VARCHAR(10000)            
 );
 """
 
